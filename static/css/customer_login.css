@@ -1,0 +1,381 @@
+/* =========================================
+   CUSTOMER LOGIN PAGE
+   ========================================= */
+
+.customer-login-page {
+    min-height: calc(100vh - 80px);
+    background: #f5f2ed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 50px 20px;
+}
+
+
+/* =========================================
+   LOGIN CONTAINER
+   ========================================= */
+
+.customer-login-container {
+    width: 100%;
+    max-width: 950px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================
+   LEFT SIDE
+   ========================================= */
+
+.customer-login-left {
+    background: #333333;
+
+    color: white;
+
+    padding: 55px 45px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.customer-login-left h1 {
+    font-size: 40px;
+
+    margin: 0 0 15px;
+}
+
+.customer-login-left p {
+    color: #dddddd;
+
+    line-height: 1.7;
+
+    font-size: 16px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================
+   FEATURES
+   ========================================= */
+
+.login-features {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 10px 0 0;
+}
+
+.login-features li {
+    margin: 15px 0;
+
+    font-size: 15px;
+}
+
+.login-features li::before {
+    content: "✓";
+
+    margin-right: 10px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   RIGHT SIDE
+   ========================================= */
+
+.customer-login-right {
+    padding: 50px 45px;
+
+    background: white;
+}
+
+.customer-login-right h2 {
+    text-align: center;
+
+    color: #333333;
+
+    font-size: 30px;
+
+    margin: 0 0 10px;
+}
+
+.login-subtitle {
+    text-align: center;
+
+    color: #777777;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================
+   FORM
+   ========================================= */
+
+.customer-login-form {
+    width: 100%;
+}
+
+.customer-login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.customer-login-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #444444;
+
+    font-weight: 600;
+
+    font-size: 14px;
+}
+
+.customer-login-form input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+.customer-login-form input:focus {
+    border-color: #333333;
+
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================
+   PASSWORD
+   ========================================= */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 45px;
+}
+
+
+/* =========================================
+   REMEMBER / FORGOT
+   ========================================= */
+
+.login-options {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin: 5px 0 25px;
+
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #666666;
+}
+
+.remember-me input {
+    width: auto;
+}
+
+.forgot-password {
+    color: #333333;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+   ========================================= */
+
+.customer-login-btn {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #333333;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.customer-login-btn:hover {
+    background: #555555;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   REGISTER LINK
+   ========================================= */
+
+.register-section {
+    text-align: center;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eeeeee;
+
+    color: #777777;
+}
+
+.register-section a {
+    color: #333333;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.register-section a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   ERROR / SUCCESS MESSAGE
+   ========================================= */
+
+.login-message {
+    padding: 12px 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+}
+
+.login-message.error {
+    background: #fbeaea;
+
+    color: #a94442;
+
+    border: 1px solid #f0cccc;
+}
+
+.login-message.success {
+    background: #eaf7ed;
+
+    color: #357a38;
+
+    border: 1px solid #cce8d0;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media screen and (max-width: 800px) {
+
+    .customer-login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .customer-login-left {
+        padding: 40px 30px;
+
+        text-align: center;
+    }
+
+    .customer-login-left h1 {
+        font-size: 32px;
+    }
+
+    .login-features {
+        text-align: left;
+    }
+
+    .customer-login-right {
+        padding: 40px 30px;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+
+    .customer-login-page {
+        padding: 30px 15px;
+    }
+
+    .customer-login-left {
+        padding: 35px 25px;
+    }
+
+    .customer-login-right {
+        padding: 35px 25px;
+    }
+
+    .customer-login-right h2 {
+        font-size: 26px;
+    }
+
+    .login-options {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+}

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | Interior Design System
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-tag">
+            DESIGN • CREATE • INSPIRE
+        </p>
+
+        <h1>
+            Transform Your Space
+            <span>Into Something Beautiful</span>
+        </h1>
+
+        <p>
+            Discover professional interior designers, manage your
+            projects, get quotations, book consultations and shop
+            interior products — all in one place.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('services') }}"
+               class="btn-primary">
+                Explore Services
+            </a>
+
+            <a href="{{ url_for('gallery') }}"
+               class="btn-outline">
+                View Gallery
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <div class="section-heading">
+        <p>WHAT WE OFFER</p>
+        <h2>Everything You Need For Your Interior Project</h2>
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🎨
+            </div>
+
+            <h3>Professional Designers</h3>
+
+            <p>
+                Connect with talented interior designers
+                for residential and commercial projects.
+            </p>
+
+            <a href="{{ url_for('designer') }}">
+                Find Designers →
+            </a>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📋
+            </div>
+
+            <h3>Project Management</h3>
+
+            <p>
+                Track your interior project, quotations,
+                consultations and progress from one dashboard.
+            </p>
+
+            <a href="{{ url_for('login') }}">
+                Manage Project →
+            </a>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🛍️
+            </div>
+
+            <h3>Interior Store</h3>
+
+            <p>
+                Explore furniture, lighting, décor and other
+                products for your dream interior.
+            </p>
+
+            <a href="{{ url_for('store') }}">
+                Visit Store →
+            </a>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📅
+            </div>
+
+            <h3>Easy Appointments</h3>
+
+            <p>
+                Schedule consultations and appointments
+                with interior professionals.
+            </p>
+
+            <a href="{{ url_for('consultation') }}">
+                Book Appointment →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-preview">
+
+    <div class="about-preview-image">
+        <img
+            src="{{ url_for('static', filename='images/interior-about.jpg') }}"
+            alt="Modern Interior Design">
+    </div>
+
+    <div class="about-preview-content">
+
+        <p class="section-tag">
+            ABOUT OUR SYSTEM
+        </p>
+
+        <h2>
+            Your Complete Interior Design Management Platform
+        </h2>
+
+        <p>
+            Our Interior Design System connects customers,
+            designers, contractors and suppliers through
+            one centralized platform.
+        </p>
+
+        <p>
+            From the first consultation to project completion,
+            everything can be managed digitally.
+        </p>
+
+        <a href="{{ url_for('about') }}"
+           class="btn-primary">
+            Learn More
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="cta">
+
+    <div>
+
+        <h2>
+            Ready to Design Your Dream Space?
+        </h2>
+
+        <p>
+            Register today and start your interior design journey.
+        </p>
+
+        <a href="{{ url_for('register') }}"
+           class="btn-primary">
+            Get Started
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

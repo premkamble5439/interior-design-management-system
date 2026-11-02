@@ -1,0 +1,266 @@
+.contractor-dashboard-page {
+    min-height: calc(100vh - 75px);
+    padding: 42px 0 72px;
+    background: #f4f6f8;
+    color: #202938;
+}
+
+.contractor-dashboard-page > .container {
+    width: min(1240px, calc(100% - 40px));
+}
+
+.contractor-dashboard-page .dashboard-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    overflow: hidden;
+    margin: 0 0 24px;
+    padding: 34px 38px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 18px;
+    background: linear-gradient(120deg, #18222d 0%, #263743 68%, #455748 100%);
+    box-shadow: 0 14px 34px rgba(24, 34, 45, .15);
+    color: #fff;
+}
+
+.contractor-dashboard-page .dashboard-header::after {
+    position: absolute;
+    top: -110px;
+    right: -48px;
+    width: 270px;
+    height: 270px;
+    border: 38px solid rgba(216, 183, 132, .13);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+}
+
+.contractor-dashboard-page .dashboard-header > div,
+.contractor-dashboard-page .dashboard-header > a {
+    position: relative;
+    z-index: 1;
+}
+
+.contractor-dashboard-page .dashboard-header .section-tag {
+    margin-bottom: 12px;
+    border-color: rgba(224, 190, 135, .35);
+    background: rgba(224, 190, 135, .12);
+    color: #ead3aa;
+}
+
+.contractor-dashboard-page .dashboard-header h1 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: clamp(1.9rem, 4vw, 2.55rem);
+    letter-spacing: -.035em;
+}
+
+.contractor-dashboard-page .dashboard-header p {
+    margin: 0;
+    color: #d1d9df;
+    font-size: .96rem;
+}
+
+.contractor-dashboard-page .dashboard-header .btn-outline {
+    flex: 0 0 auto;
+    border-color: rgba(255, 255, 255, .42);
+    border-radius: 10px;
+    color: #fff;
+}
+
+.contractor-dashboard-page .dashboard-header .btn-outline:hover {
+    border-color: #d8b784;
+    background: #d8b784;
+    color: #18222d;
+}
+
+.contractor-dashboard-page .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 24px;
+}
+
+.contractor-dashboard-page .dashboard-card,
+.contractor-dashboard-page .dashboard-panel {
+    border: 1px solid #e6eaf0;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 7px 22px rgba(30, 41, 59, .045);
+}
+
+.contractor-dashboard-page .dashboard-card {
+    position: relative;
+    min-height: 152px;
+    padding: 21px 22px;
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.contractor-dashboard-page .dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(30, 41, 59, .09);
+}
+
+.contractor-dashboard-page .dashboard-icon {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 13px;
+    border-radius: 11px;
+    background: #f5efe5;
+    color: #876333;
+    font-size: .76rem;
+    font-weight: 800;
+}
+
+.contractor-dashboard-page .dashboard-card h3 {
+    margin: 0 0 4px;
+    color: #778293;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+}
+
+.contractor-dashboard-page .dashboard-card strong {
+    display: block;
+    color: #202938;
+    font-size: 1.85rem;
+    line-height: 1.2;
+}
+
+.contractor-dashboard-page .dashboard-card p {
+    margin: 6px 0 0;
+    color: #929baa;
+    font-size: .8rem;
+}
+
+.contractor-dashboard-page .dashboard-panel {
+    margin-bottom: 20px;
+    padding: 24px;
+}
+
+.contractor-dashboard-page .panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.contractor-dashboard-page .panel-heading h2 {
+    margin: 2px 0 5px;
+    color: #202938;
+    font-size: 1.24rem;
+    letter-spacing: -.02em;
+}
+
+.contractor-dashboard-page .panel-heading .section-tag {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border: 0;
+    background: #f5efe5;
+    color: #876333;
+    font-size: .65rem;
+    letter-spacing: .12em;
+}
+
+.contractor-dashboard-page .table-wrapper {
+    overflow-x: auto;
+    margin-top: 16px;
+    border: 1px solid #edf0f4;
+    border-radius: 12px;
+}
+
+.contractor-dashboard-page .dashboard-table {
+    width: 100%;
+    min-width: 580px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.contractor-dashboard-page .dashboard-table th,
+.contractor-dashboard-page .dashboard-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #edf0f4;
+    color: #465161;
+    font-size: .88rem;
+    vertical-align: middle;
+}
+
+.contractor-dashboard-page .dashboard-table th {
+    background: #f8f9fb;
+    color: #788393;
+    font-size: .7rem;
+    font-weight: 750;
+    letter-spacing: .075em;
+    text-transform: uppercase;
+}
+
+.contractor-dashboard-page .dashboard-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.contractor-dashboard-page .dashboard-table tbody tr:hover {
+    background: #fcfaf7;
+}
+
+.contractor-dashboard-page .dashboard-table td[colspan] {
+    padding: 24px;
+    color: #788393;
+    text-align: center;
+}
+
+.contractor-dashboard-page .dashboard-table .status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #f5efe5;
+    color: #805e2f;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+@media (max-width: 600px) {
+    .contractor-dashboard-page {
+        padding: 24px 0 48px;
+    }
+
+    .contractor-dashboard-page > .container {
+        width: calc(100% - 28px);
+    }
+
+    .contractor-dashboard-page .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 26px 22px;
+    }
+
+    .contractor-dashboard-page .dashboard-header .btn-outline {
+        padding: 10px 17px;
+    }
+
+    .contractor-dashboard-page .dashboard-grid {
+        gap: 11px;
+    }
+
+    .contractor-dashboard-page .dashboard-card {
+        min-height: 142px;
+        padding: 16px;
+    }
+
+    .contractor-dashboard-page .dashboard-panel {
+        padding: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contractor-dashboard-page .dashboard-card {
+        transition: none;
+    }
+}

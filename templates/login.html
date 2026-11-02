@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+Customer Login - Interior Design System
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/customer_login.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="customer-login-page">
+
+    <div class="customer-login-container">
+
+        <div class="customer-login-left">
+
+            <h1>Welcome Back</h1>
+
+            <p>
+                Login to your Interior Design System
+                customer account and manage your projects.
+            </p>
+
+            <ul class="login-features">
+                <li>Manage your interior projects</li>
+                <li>Track project progress</li>
+                <li>View quotations</li>
+                <li>Book consultations</li>
+                <li>Shop interior products</li>
+            </ul>
+
+        </div>
+
+
+        <div class="customer-login-right">
+
+            <h2>Customer Login</h2>
+
+            <p class="login-subtitle">
+                Sign in to continue
+            </p>
+
+            <form method="POST"
+                  action="{{ url_for('login') }}"
+                  class="customer-login-form">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           placeholder="Enter your email"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               placeholder="Enter your password"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-options">
+
+                    <label class="remember-me">
+
+                        <input type="checkbox"
+                               name="remember">
+
+                        Remember me
+
+                    </label>
+
+                    <a href="#"
+                       class="forgot-password">
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <button type="submit"
+                        class="customer-login-btn">
+
+                    Login
+
+                </button>
+
+            </form>
+
+
+            <div class="register-section">
+
+                Don't have an account?
+
+                <a href="{{ url_for('register') }}">
+                    Create Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

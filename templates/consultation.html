@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+
+{% block title %}Book Consultation - Interior Design System{% endblock %}
+
+{% block content %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/consultation.css') }}">
+
+<section class="consultation-page">
+
+    <div class="consultation-header">
+        <h1>Book a Consultation</h1>
+        <p>
+            Tell us about your interior design requirements and our team
+            will help you create your ideal space.
+        </p>
+    </div>
+
+    <div class="consultation-container">
+
+        <!-- LEFT SIDE -->
+        <div class="consultation-info">
+
+            <h2>Let's Design Your Dream Space</h2>
+
+            <p>
+                Choose the service you are interested in and provide
+                some details about your project. Our design team will
+                contact you to discuss your requirements.
+            </p>
+
+            <div class="consultation-feature">
+                <span>✓</span>
+                <div>
+                    <h3>Professional Designers</h3>
+                    <p>Get guidance from experienced interior designers.</p>
+                </div>
+            </div>
+
+            <div class="consultation-feature">
+                <span>✓</span>
+                <div>
+                    <h3>Personalized Design</h3>
+                    <p>Design solutions based on your needs and budget.</p>
+                </div>
+            </div>
+
+            <div class="consultation-feature">
+                <span>✓</span>
+                <div>
+                    <h3>Free Initial Consultation</h3>
+                    <p>Discuss your project before making a decision.</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE FORM -->
+        <div class="consultation-form-card">
+
+            <h2>Consultation Request</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('consultation') }}" id="consultationForm">
+
+                <!-- CUSTOMER NAME -->
+                <div class="form-group">
+                    <label for="name">
+                        Full Name <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label for="email">
+                        Email Address <span>*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+                </div>
+
+
+                <!-- PHONE -->
+                <div class="form-group">
+                    <label for="phone">
+                        Phone Number <span>*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        required
+                    >
+                </div>
+
+
+                <!-- SERVICE -->
+<div class="form-group">
+    <label for="service_id">
+        Select Service <span class="required">*</span>
+    </label>
+
+    <select id="service_id" name="service_id" required>
+        <option value="">-- Select a Service --</option>
+
+        {% for service in services %}
+            <option value="{{ service.id }}">
+                {{ service.name }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+                       
+                <!-- PROPERTY TYPE -->
+                <div class="form-group">
+
+                    <label for="property_type">
+                        Property Type <span>*</span>
+                    </label>
+
+                    <select
+                        id="property_type"
+                        name="property_type"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select Property Type --
+                        </option>
+
+                        <option value="Apartment">
+                            Apartment
+                        </option>
+
+                        <option value="House">
+                            House
+                        </option>
+
+                        <option value="Villa">
+                            Villa
+                        </option>
+
+                        <option value="Office">
+                            Office
+                        </option>
+
+                        <option value="Shop">
+                            Shop
+                        </option>
+
+                        <option value="Commercial Space">
+                            Commercial Space
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUDGET -->
+                <div class="form-group">
+
+                    <label for="budget">
+                        Estimated Budget
+                    </label>
+
+                    <select
+                        id="budget"
+                        name="budget"
+                    >
+
+                        <option value="">
+                            -- Select Budget --
+                        </option>
+
+                        <option value="Below ₹2 Lakh">
+                            Below ₹2 Lakh
+                        </option>
+
+                        <option value="₹2 Lakh - ₹5 Lakh">
+                            ₹2 Lakh - ₹5 Lakh
+                        </option>
+
+                        <option value="₹5 Lakh - ₹10 Lakh">
+                            ₹5 Lakh - ₹10 Lakh
+                        </option>
+
+                        <option value="₹10 Lakh - ₹20 Lakh">
+                            ₹10 Lakh - ₹20 Lakh
+                        </option>
+
+                        <option value="Above ₹20 Lakh">
+                            Above ₹20 Lakh
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PREFERRED DATE -->
+                <div class="form-group">
+
+                    <label for="preferred_date">
+                        Preferred Consultation Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="preferred_date"
+                        name="preferred_date"
+                    >
+
+                </div>
+
+
+                <!-- PREFERRED TIME -->
+                <div class="form-group">
+
+                    <label for="preferred_time">
+                        Preferred Time
+                    </label>
+
+                    <select
+                        id="preferred_time"
+                        name="preferred_time"
+                    >
+
+                        <option value="">
+                            -- Select Time --
+                        </option>
+
+                        <option value="10:00 AM - 12:00 PM">
+                            10:00 AM - 12:00 PM
+                        </option>
+
+                        <option value="12:00 PM - 2:00 PM">
+                            12:00 PM - 2:00 PM
+                        </option>
+
+                        <option value="2:00 PM - 4:00 PM">
+                            2:00 PM - 4:00 PM
+                        </option>
+
+                        <option value="4:00 PM - 6:00 PM">
+                            4:00 PM - 6:00 PM
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PROJECT DETAILS -->
+                <div class="form-group">
+
+                    <label for="message">
+                        Project Details <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="5"
+                        placeholder="Tell us about your project, room size, requirements, preferred style, etc."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+                <button
+                    type="submit"
+                    class="consultation-btn"
+                >
+                    Book Consultation
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FORM VALIDATION -->
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("consultationForm");
+
+    const dateInput = document.getElementById("preferred_date");
+
+    // Prevent selecting previous dates
+    if (dateInput) {
+
+        const today = new Date();
+
+        const year = today.getFullYear();
+
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+
+        const day = String(today.getDate()).padStart(2, "0");
+
+        dateInput.min = `${year}-${month}-${day}`;
+    }
+
+
+    form.addEventListener("submit", function (event) {
+
+        const phone = document.getElementById("phone").value.trim();
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+
+            event.preventDefault();
+
+            alert("Please enter a valid 10-digit phone number.");
+
+            return;
+        }
+
+
+        const service = document.getElementById("service").value;
+
+        if (!service) {
+
+            event.preventDefault();
+
+            alert("Please select an interior design service.");
+
+            return;
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

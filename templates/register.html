@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block title %}Register | Interior Design{% endblock %}
+
+{% block content %}
+
+<section class="register-section">
+
+    <div class="register-container register-layout">
+
+        <!-- IMAGE BLOCK -->
+        <div class="register-image">
+
+            <img src="{{ url_for('static', filename='images/register-interior.jpg') }}"
+                 alt="Modern Interior Design">
+
+            <div class="register-image-overlay">
+                <span>INTERIOR DESIGN</span>
+                <h2>Design Your<br>Dream Space</h2>
+                <p>
+                    Create beautiful spaces with ideas,
+                    inspiration and professional interior design.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- REGISTER FORM -->
+        <div class="register-card">
+
+            <div class="register-header">
+
+                <span class="section-tag">Create Account</span>
+
+                <h1>Register</h1>
+
+                <p>
+                    Create your account and start your
+                    interior design journey.
+                </p>
+
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST"
+                  action="{{ url_for('register') }}"
+                  class="register-form"
+                  id="registerForm"
+                  novalidate>
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           placeholder="Enter your full name"
+                           autocomplete="name">
+
+                    <small id="nameError"
+                           class="validation-message"></small>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           placeholder="Enter your email"
+                           autocomplete="email">
+
+                    <small id="emailError"
+                           class="validation-message"></small>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           placeholder="Enter 10-digit mobile number"
+                           maxlength="10"
+                           autocomplete="tel">
+
+                    <small id="phoneError"
+                           class="validation-message"></small>
+                </div>
+		<!-- Register As -->
+<div class="form-group">
+
+    <label for="role">Register As</label>
+
+    <select id="role"
+            name="role"
+            required>
+
+        <option value="">-- Select Account Type --</option>
+        <option value="customer">Customer</option>
+        <option value="designer">Designer</option>
+        <option value="contractor">Contractor</option>
+        <option value="supplier">Supplier</option>
+
+    </select>
+
+    <small id="roleError"
+           class="validation-message"></small>
+
+</div>
+
+                <div class="form-group" id="companyNameGroup" hidden>
+                    <label for="company_name">Company Name</label>
+                    <input type="text"
+                           id="company_name"
+                           name="company_name"
+                           placeholder="Enter your business name"
+                           autocomplete="organization">
+                </div>
+
+                <div class="form-group" id="specializationGroup" hidden>
+                    <label for="specialization">Specialization <span>(optional)</span></label>
+                    <input type="text"
+                           id="specialization"
+                           name="specialization"
+                           placeholder="e.g. residential interiors">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address"
+                              name="address"
+                              rows="3"
+                              placeholder="Enter your business or mailing address"
+                              autocomplete="street-address"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="Create a password"
+                           autocomplete="new-password">
+
+                    <div class="password-hint">
+                        Minimum 8 characters with uppercase,
+                        lowercase, number and special character.
+                    </div>
+
+                    <small id="passwordError"
+                           class="validation-message"></small>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+                    <input type="password"
+                           id="confirm_password"
+                           name="confirm_password"
+                           placeholder="Re-enter your password"
+                           autocomplete="new-password">
+
+                    <small id="confirmPasswordError"
+                           class="validation-message"></small>
+                </div>
+
+
+                <div class="form-group terms-group">
+
+                    <label class="checkbox-label">
+
+                        <input type="checkbox"
+                               id="terms"
+                               name="terms">
+
+                        <span>
+                            I agree to the
+                            <a href="#">Terms & Conditions</a>
+                            and
+                            <a href="#">Privacy Policy</a>.
+                        </span>
+
+                    </label>
+
+                    <small id="termsError"
+                           class="validation-message"></small>
+
+                </div>
+
+
+                <button type="submit"
+                        class="register-button">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div class="register-footer">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Login here
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}
+
+
+{% block extra_js %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const roleSelect = document.getElementById("role");
+    const companyNameGroup = document.getElementById("companyNameGroup");
+    const companyNameInput = document.getElementById("company_name");
+    const specializationGroup = document.getElementById("specializationGroup");
+
+    function updateRoleFields() {
+        const role = roleSelect.value;
+        const needsCompany = role === "supplier" || role === "contractor";
+        const needsSpecialization = role === "designer" || role === "contractor";
+
+        companyNameGroup.hidden = !needsCompany;
+        companyNameInput.required = needsCompany;
+        specializationGroup.hidden = !needsSpecialization;
+    }
+
+    roleSelect.addEventListener("change", updateRoleFields);
+    updateRoleFields();
+});
+</script>
+{% endblock %}

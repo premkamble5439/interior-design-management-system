@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Interior Design System{% endblock %}</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/motion.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% block extra_css %}{% endblock %}
+    <!-- Page-specific CSS -->
+    {% block head %}{% endblock %}
+</head>
+
+
+<body>
+<!-- Flash Message Popup -->
+
+<div id="flash-container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash-popup {{ category }}">
+
+                    <div class="flash-icon">
+                        {% if category == 'success' %}
+                            ✓
+                        {% elif category == 'error' or category == 'danger' %}
+                            !
+                        {% else %}
+                            i
+                        {% endif %}
+                    </div>
+
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+
+                    <button class="flash-close"
+                            onclick="closeFlash(this)">
+                        ×
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+</div>
+
+<!-- =======================================================
+     NAVIGATION BAR
+======================================================= -->
+
+<header class="navbar{% if session.get('role') in ['admin', 'supplier', 'contractor'] %} portal-navbar{% endif %}">
+
+    <div class="container nav-container">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <a href="{{ url_for('index') }}">
+
+                <span class="logo-icon">🏠</span>
+
+                <span class="logo-text">
+                    Interior Design Studio
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="nav-menu">
+
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('about') }}">
+                About
+            </a>
+
+            <a href="{{ url_for('services') }}">
+                Services
+            </a>
+
+            <a href="{{ url_for('gallery') }}">
+                Gallery
+            </a>
+
+            <a href="{{ url_for('designer') }}">
+                Designers
+            </a>
+
+            <a href="{{ url_for('store') }}">
+                Store
+            </a>
+
+
+            {% if session.get('user_id') %}
+
+                {% if session.get('role') == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                {% elif session.get('role') == 'designer' %}
+                    <a href="{{ url_for('designer_dashboard') }}">Dashboard</a>
+                {% elif session.get('role') == 'contractor' %}
+                    <a href="{{ url_for('contractor_dashboard') }}">Dashboard</a>
+                {% elif session.get('role') == 'supplier' %}
+                    <a href="{{ url_for('supplier_dashboard') }}">Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('customer_dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('project_tracking') }}">Projects</a>
+                    <a href="{{ url_for('cart') }}">Cart</a>
+                {% endif %}
+
+                <a href="{{ url_for('logout') }}">Logout</a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('admin_login') }}">
+                    Admin
+                </a>
+
+                <a href="{{ url_for('designer_login') }}">
+                    Designer
+                </a>
+
+                <a href="{{ url_for('contractor_login') }}">
+                    Contractor
+                </a>
+
+                <a href="{{ url_for('supplier_login') }}">
+                    Supplier
+                </a>
+
+                <a href="{{ url_for('register') }}"
+                   class="nav-button">
+
+                    Register
+
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =======================================================
+     FLASH MESSAGES
+======================================================= -->
+
+<div class="flash-container">
+
+    {% with messages = get_flashed_messages(
+        with_categories=true
+    ) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+</div>
+
+
+
+<!-- =======================================================
+     MAIN CONTENT
+======================================================= -->
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+
+        <!-- ABOUT -->
+
+        <div class="footer-column">
+
+            <h3>
+                InterioDesign
+            </h3>
+
+            <p>
+                Transforming spaces into beautiful,
+                functional and inspiring environments.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('about') }}">
+                About
+            </a>
+
+            <a href="{{ url_for('services') }}">
+                Services
+            </a>
+
+            <a href="{{ url_for('gallery') }}">
+                Gallery
+            </a>
+
+            <a href="{{ url_for('designer') }}">
+                Designers
+            </a>
+
+        </div>
+
+
+        <!-- CUSTOMER SERVICES -->
+
+        <div class="footer-column">
+
+            <h3>
+                Customer
+            </h3>
+
+            <a href="{{ url_for('consultation') }}">
+                Consultation
+            </a>
+
+            <a href="{{ url_for('quotation') }}">
+                Quotation
+            </a>
+
+            <a href="{{ url_for('project_tracking') }}">
+                Project Tracking
+            </a>
+
+            <a href="{{ url_for('store') }}">
+                Store
+            </a>
+
+            <a href="{{ url_for('cart') }}">
+                Cart
+            </a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-column">
+
+            <h3>
+                Contact Us
+            </h3>
+
+            <p>
+                📍 Pune, Maharashtra
+            </p>
+
+            <p>
+                📞 +91 98765 43210
+            </p>
+
+            <p>
+                ✉️ info@interiodesign.com
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- COPYRIGHT -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 InterioDesign.
+            All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<section class="help-chat" data-help-chat aria-label="Website help chat">
+    <button class="help-chat-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="help-chat-panel">
+        <span aria-hidden="true">?</span>
+        <span>Need help?</span>
+    </button>
+
+    <div class="help-chat-panel" id="help-chat-panel" hidden>
+        <header class="help-chat-header">
+            <div>
+                <h2>Website Help</h2>
+                <p>Ask about using the Interior Design Studio</p>
+            </div>
+            <button class="help-chat-close"
+                    type="button"
+                    aria-label="Close help chat">×</button>
+        </header>
+        <div class="help-chat-messages"
+             data-chat-messages
+             role="log"
+             aria-live="polite"
+             aria-relevant="additions text">
+            <div class="help-chat-message help-chat-bot">
+                Hi! I can help you find services, designers, consultations,
+                account registration, orders, and project updates. What would
+                you like to know?
+            </div>
+        </div>
+        <div class="help-chat-suggestions" aria-label="Suggested questions">
+            <button type="button" data-chat-question="How do I book a consultation?">Book a consultation</button>
+            <button type="button" data-chat-question="How do I find a designer?">Find a designer</button>
+            <button type="button" data-chat-question="How do I track my project?">Track a project</button>
+        </div>
+        <form class="help-chat-form" data-chat-form>
+            <label class="visually-hidden" for="help-chat-input">Ask a question</label>
+            <input id="help-chat-input"
+                   name="question"
+                   type="text"
+                   placeholder="Type your question..."
+                   maxlength="300"
+                   autocomplete="off"
+                   required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</section>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script src="{{ url_for('static', filename='js/main.js') }}">
+</script>
+<script src="{{ url_for('static', filename='js/motion.js', v='20261023-dashboard-visibility') }}" defer>
+</script>
+<script src="{{ url_for('static', filename='js/chatbot.js') }}" defer>
+</script>
+
+
+{% block extra_js %}
+{% endblock %}
+
+
+</body>
+
+</html>

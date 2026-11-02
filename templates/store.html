@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Interior Design Store{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/store.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="store-page">
+    <section class="store-header">
+        <div class="store-header-content">
+            <p class="store-eyebrow">INTERIOR STORE</p>
+            <h1>Find the finishing touch for your space</h1>
+            <p>Shop furniture, lighting and decor for every room.</p>
+            <a href="{{ url_for('cart') }}" class="cart-button">
+                View Cart{% if cart_count %} ({{ cart_count }}){% endif %}
+            </a>
+        </div>
+    </section>
+
+    <section class="store-controls" aria-label="Search and filter products">
+        <form action="{{ url_for('store') }}" method="GET" class="store-filter-form">
+            <label class="search-box">
+                <span class="visually-hidden">Search products</span>
+                <input type="search"
+                       name="search"
+                       value="{{ search }}"
+                       placeholder="Search products..."
+                       aria-label="Search products">
+            </label>
+
+            <label class="category-filter">
+                <span class="visually-hidden">Filter by category</span>
+                <select name="category" aria-label="Filter by category">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.category }}"
+                        {% if selected_category == category.category %}selected{% endif %}>
+                        {{ category.category }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <button type="submit" class="store-search-button">Search</button>
+            {% if search or selected_category %}
+            <a href="{{ url_for('store') }}" class="store-clear-filter">Clear filters</a>
+            {% endif %}
+        </form>
+    </section>
+
+    {% if categories %}
+    <nav class="store-category-nav" aria-label="Browse product categories">
+        <a href="{{ url_for('store', search=search) }}"
+           class="{% if not selected_category %}active{% endif %}">
+            All Products
+        </a>
+        {% for category in categories %}
+        <a href="{{ url_for('store', search=search, category=category.category) }}"
+           class="{% if selected_category == category.category %}active{% endif %}">
+            {{ category.category }}
+        </a>
+        {% endfor %}
+    </nav>
+    {% endif %}
+
+    <section class="products-section">
+        <div class="products-heading">
+            <div>
+                <p class="store-eyebrow">CURATED FOR YOUR HOME</p>
+                <h2>{% if selected_category %}{{ selected_category }}{% else %}Our Products{% endif %}</h2>
+            </div>
+            <p>{{ products|length }} product{% if products|length != 1 %}s{% endif %}</p>
+        </div>
+
+        {% if products %}
+        <div class="product-grid" id="productGrid">
+            {% for product in products %}
+            <article class="product-card">
+                <a class="product-image"
+                   href="{{ url_for('store_product', product_id=product.id) }}"
+                   aria-label="View {{ product.name }} details">
+                    {% if product.image %}
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}"
+                         alt="{{ product.name }}"
+                         loading="lazy">
+                    {% else %}
+                    <span class="product-image-placeholder">Interior Design</span>
+                    {% endif %}
+                    {% if product.stock_quantity|int <= 0 %}
+                    <span class="stock-badge out-of-stock">Out of stock</span>
+                    {% endif %}
+                </a>
+
+                <div class="product-info">
+                    <span class="product-category">{{ product.category or 'Interior' }}</span>
+                    <h3>
+                        <a href="{{ url_for('store_product', product_id=product.id) }}">
+                            {{ product.name }}
+                        </a>
+                    </h3>
+                    <p>{{ product.description or 'Thoughtfully selected for your home.' }}</p>
+                    <div class="price">₹{{ "%.2f"|format(product.price or 0) }}</div>
+                    {% if product.stock_quantity|int > 0 %}
+                    <p class="stock-availability">
+                        {{ product.stock_quantity }} available
+                    </p>
+                    {% else %}
+                    <p class="stock-availability out-of-stock-text">Currently unavailable</p>
+                    {% endif %}
+                    <div class="product-actions">
+                        <a class="product-details-button"
+                           href="{{ url_for('store_product', product_id=product.id) }}">
+                            View Details
+                        </a>
+                        <form action="{{ url_for('add_to_cart', product_id=product.id) }}"
+                              method="POST">
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="next"
+                                   value="{{ url_for('store', search=search, category=selected_category) }}">
+                            <button type="submit"
+                                    class="add-cart"
+                                    {% if product.stock_quantity|int <= 0 %}disabled{% endif %}>
+                                {% if product.stock_quantity|int <= 0 %}Out of Stock{% else %}Add to Cart{% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-products">
+            <h3>No products found</h3>
+            <p>Try another search or choose a different category.</p>
+            <a href="{{ url_for('store') }}" class="product-details-button">View all products</a>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}Project Tracking - Interior Design System{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/customer_pages.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="customer-page">
+
+    <!-- HEADER -->
+
+    <section class="page-hero">
+
+        <div>
+
+            <span class="page-label">
+                PROJECT MANAGEMENT
+            </span>
+
+            <h1>Project Tracking</h1>
+
+            <p>
+                Monitor the progress of your interior design
+                projects from planning to completion.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            📊
+        </div>
+
+    </section>
+
+
+    {% if projects %}
+
+    <!-- PROJECTS -->
+
+    <div class="tracking-list">
+
+        {% for project in projects %}
+
+        <div class="tracking-card">
+
+
+            <!-- PROJECT HEADER -->
+
+            <div class="tracking-header">
+
+                <div>
+
+                    <span class="project-id">
+                        PROJECT #{{ project.id }}
+                    </span>
+
+                    <h2>
+                        {{ project.project_name }}
+                    </h2>
+
+                    <p>
+                        {{ project.project_type
+                           if project.project_type
+                           else 'Interior Design Project' }}
+                    </p>
+
+                </div>
+
+
+                {% set status =
+                    project.status|lower
+                    if project.status
+                    else 'new'
+                %}
+
+
+                {% if status == 'completed' %}
+
+                    <span class="status-badge status-approved">
+                        Completed
+                    </span>
+
+                {% elif status == 'in_progress' %}
+
+                    <span class="status-badge status-sent">
+                        In Progress
+                    </span>
+
+                {% elif status == 'planning' %}
+
+                    <span class="status-badge status-draft">
+                        Planning
+                    </span>
+
+                {% elif status == 'cancelled' %}
+
+                    <span class="status-badge status-rejected">
+                        Cancelled
+                    </span>
+
+                {% elif status == 'on_hold' %}
+
+                    <span class="status-badge status-expired">
+                        On Hold
+                    </span>
+
+                {% else %}
+
+                    <span class="status-badge status-draft">
+                        {{ status|replace('_', ' ')|title }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PROJECT DETAILS -->
+
+            <div class="project-details-grid">
+
+                <div>
+
+                    <span>Project Type</span>
+
+                    <strong>
+                        {{ project.project_type
+                           if project.project_type
+                           else 'Not specified' }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Start Date</span>
+
+                    <strong>
+                        {{ project.start_date
+                           if project.start_date
+                           else 'Not started' }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Expected Completion</span>
+
+                    <strong>
+                        {{ project.expected_end_date
+                           if project.expected_end_date
+                           else 'Not specified' }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Budget</span>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(project.budget|float) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            {% if project.description %}
+
+            <div class="project-description">
+
+                <h3>Project Description</h3>
+
+                <p>
+                    {{ project.description }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- PROGRESS -->
+
+            {% set progress = project.progress|default(0)|int %}
+
+            <div class="progress-area">
+
+                <div class="progress-heading">
+
+                    <strong>
+                        Project Progress
+                    </strong>
+
+                    <span>
+                        {{ progress }}%
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div class="progress-fill"
+                         style="width: {{ progress }}%;">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TIMELINE -->
+
+            <div class="project-timeline">
+
+                <div class="timeline-item active">
+
+                    <div class="timeline-dot"></div>
+
+                    <div>
+
+                        <strong>
+                            Project Created
+                        </strong>
+
+                        <p>
+                            Your project has been registered.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="timeline-item
+                    {% if status in ['design',
+                                     'approval',
+                                     'in_progress',
+                                     'completed'] %}
+                    active
+                    {% endif %}">
+
+                    <div class="timeline-dot"></div>
+
+                    <div>
+
+                        <strong>
+                            Design & Planning
+                        </strong>
+
+                        <p>
+                            Design concepts and planning.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="timeline-item
+                    {% if status in ['in_progress',
+                                     'completed'] %}
+                    active
+                    {% endif %}">
+
+                    <div class="timeline-dot"></div>
+
+                    <div>
+
+                        <strong>
+                            Execution
+                        </strong>
+
+                        <p>
+                            Interior work is being executed.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="timeline-item
+                    {% if status == 'completed' %}
+                    active
+                    {% endif %}">
+
+                    <div class="timeline-dot"></div>
+
+                    <div>
+
+                        <strong>
+                            Completed
+                        </strong>
+
+                        <p>
+                            Project completed successfully.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT UPDATES -->
+
+            {% if project.updates %}
+
+            <div class="updates-area">
+
+                <h3>
+                    Recent Updates
+                </h3>
+
+
+                {% for update in project.updates %}
+
+                <div class="update-item">
+
+                    <div class="update-progress">
+
+                        {{ update.progress_percent }}%
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            {{ update.title }}
+                        </h4>
+
+                        <p>
+                            {{ update.description }}
+                        </p>
+
+                        <small>
+                            {{ update.created_at }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <!-- EMPTY -->
+
+    <div class="empty-page">
+
+        <div class="empty-icon">
+            🏠
+        </div>
+
+        <h2>No Projects Found</h2>
+
+        <p>
+            You don't have any active interior design
+            projects at the moment.
+        </p>
+
+        <a href="{{ url_for('consultation') }}"
+           class="primary-btn">
+
+            Start a New Project
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

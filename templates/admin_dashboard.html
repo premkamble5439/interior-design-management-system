@@ -1,0 +1,664 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | Interior Design{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-section admin-dashboard-page">
+
+    <div class="container">
+
+        <div class="dashboard-header">
+
+            <div>
+                <span class="section-tag">ADMIN PORTAL</span>
+
+                <h1>Admin Dashboard</h1>
+
+                <p>
+                    Manage the Interior Design Management System.
+                </p>
+            </div>
+
+            <a href="{{ url_for('logout') }}"
+               class="btn-outline">
+
+                Logout
+
+            </a>
+
+        </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">PAYMENTS</span>
+                    <h2>Razorpay transactions</h2>
+                    <p>Review Razorpay payments recorded by the site.</p>
+                </div>
+                <a href="{{ url_for('admin_payments_dashboard') }}"
+                   class="btn-primary">
+                    Open payment dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">ACCOUNT MANAGEMENT</span>
+                    <h2>Manage customers and professionals</h2>
+                    <p>View, edit, activate, deactivate, or remove customer, supplier, contractor, and designer accounts.</p>
+                </div>
+                <a href="{{ url_for('admin_accounts') }}"
+                   class="btn-primary">
+                    Manage accounts
+                </a>
+            </div>
+        </div>
+
+        <!-- Consultation Requests -->
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">CUSTOMER SERVICE</span>
+                    <h2>Consultation Requests</h2>
+                    <p>Assign an active designer to confirm a customer's consultation.</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table consultation-requests-table">
+
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Assigned Designer</th>
+                            <th>Assignment</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for consultation in consultations %}
+                        <tr>
+                            <td>
+                                <strong>{{ consultation.customer_name or 'Customer' }}</strong>
+                                {% if consultation.customer_email %}
+                                    <small>{{ consultation.customer_email }}</small>
+                                {% endif %}
+                            </td>
+                            <td>{{ consultation.service_name or 'Interior Design Consultation' }}</td>
+                            <td>{{ consultation.display_date }}</td>
+                            <td>
+                                <span class="status-badge">
+                                    {{ (consultation.status or 'pending')|replace('_', ' ')|title }}
+                                </span>
+                            </td>
+                            <td>{{ consultation.designer_name or 'Not assigned' }}</td>
+                            <td>
+                                {% if available_designers %}
+                                <form action="{{ url_for(
+                                          'assign_consultation_designer',
+                                          consultation_id=consultation.id
+                                      ) }}"
+                                      method="POST"
+                                      class="consultation-assignment-form">
+                                    <label class="visually-hidden"
+                                           for="designer-{{ consultation.id }}">
+                                        Select designer for consultation {{ consultation.id }}
+                                    </label>
+                                    <select id="designer-{{ consultation.id }}"
+                                            name="designer_id"
+                                            required>
+                                        <option value="">Select designer</option>
+                                        {% for designer in available_designers %}
+                                        <option value="{{ designer.id }}"
+                                            {% if consultation.designer_id == designer.id %}selected{% endif %}>
+                                            {{ designer.full_name }}
+                                            {% if designer.specialization %}
+                                                — {{ designer.specialization }}
+                                            {% endif %}
+                                            — {{ designer.availability_label }} ({{ designer.workload_count }} active work item(s))
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn-primary">
+                                        {% if consultation.designer_id %}Reassign{% else %}Assign Designer{% endif %}
+                                    </button>
+                                </form>
+                                {% else %}
+                                    <span>No active designers available.</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">No consultation requests found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">PROJECTS</span>
+                    <h2>Project Contractor Assignments</h2>
+                    <p>Assign an active contractor to each customer project.</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="dashboard-table project-assignments-table">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Assigned Designer</th>
+                            <th>Designer Assignment</th>
+                            <th>Assigned Contractor</th>
+                            <th>Assignment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td>
+                                <strong>{{ project.project_name }}</strong>
+                                <small>#{{ project.id }}</small>
+                            </td>
+                            <td>{{ project.customer_name or 'Customer' }}</td>
+                            <td>
+                                <span class="status-badge">
+                                    {{ (project.status or 'new')|replace('_', ' ')|title }}
+                                </span>
+                            </td>
+                            <td>{{ project.designer_name or 'Not assigned' }}</td>
+                            <td>
+                                {% if available_designers %}
+                                <form action="{{ url_for(
+                                          'assign_project_designer',
+                                          project_id=project.id
+                                      ) }}"
+                                      method="POST"
+                                      class="project-assignment-form">
+                                    <label class="visually-hidden"
+                                           for="project-designer-{{ project.id }}">
+                                        Select designer for project {{ project.id }}
+                                    </label>
+                                    <select id="project-designer-{{ project.id }}"
+                                            name="designer_id"
+                                            required>
+                                        <option value="">Select designer</option>
+                                        {% for designer in available_designers %}
+                                        <option value="{{ designer.id }}"
+                                            {% if project.designer_id == designer.id %}selected{% endif %}>
+                                            {{ designer.full_name }} —
+                                            {{ designer.availability_label }} ({{ designer.workload_count }} active work item(s))
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn-primary">
+                                        {% if project.designer_id %}Reassign Designer{% else %}Assign Designer{% endif %}
+                                    </button>
+                                </form>
+                                {% else %}
+                                    <span>No active designers available.</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ project.contractor_name or 'Not assigned' }}</td>
+                            <td>
+                                {% if available_contractors %}
+                                <form action="{{ url_for(
+                                          'assign_project_contractor',
+                                          project_id=project.id
+                                      ) }}"
+                                      method="POST"
+                                      class="project-assignment-form">
+                                    <label class="visually-hidden"
+                                           for="contractor-{{ project.id }}">
+                                        Select contractor for project {{ project.id }}
+                                    </label>
+                                    <select id="contractor-{{ project.id }}"
+                                            name="contractor_id"
+                                            required>
+                                        <option value="">Select contractor</option>
+                                        {% for contractor in available_contractors %}
+                                        <option value="{{ contractor.id }}"
+                                            {% if project.contractor_id == contractor.id %}selected{% endif %}>
+                                            {{ contractor.company_name }}
+                                            {% if contractor.contact_person %}
+                                                — {{ contractor.contact_person }}
+                                            {% endif %}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn-primary">
+                                        {% if project.contractor_id %}Reassign{% else %}Assign{% endif %}
+                                    </button>
+                                </form>
+                                {% else %}
+                                    <span>No active contractors available.</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">No projects found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">INVENTORY</span>
+                    <h2>Products and Suppliers</h2>
+                    <p>Review stock levels and verify each product has a supplier linked for automatic reorders.</p>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Supplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category or '—' }}</td>
+                            <td>
+                                {% if product.stock_quantity|int == 0 %}
+                                    Out of stock
+                                {% else %}
+                                    {{ product.stock_quantity }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if product.supplier_name %}
+                                    {{ product.supplier_name }}
+                                    {% if product.supplier_contact %}
+                                        <small>{{ product.supplier_contact }}</small>
+                                    {% endif %}
+                                {% else %}
+                                    No supplier linked
+                                {% endif %}
+                                {% if available_suppliers %}
+                                <form action="{{ url_for(
+                                          'assign_product_supplier',
+                                          product_id=product.id
+                                      ) }}"
+                                      method="POST"
+                                      class="project-assignment-form">
+                                    <label class="visually-hidden"
+                                           for="product-supplier-{{ product.id }}">
+                                        Select supplier for {{ product.name }}
+                                    </label>
+                                    <select id="product-supplier-{{ product.id }}"
+                                            name="supplier_id">
+                                        <option value="">No supplier</option>
+                                        {% for supplier in available_suppliers %}
+                                        <option value="{{ supplier.id }}"
+                                            {% if product.supplier_id == supplier.id %}selected{% endif %}>
+                                            {{ supplier.company_name }}
+                                            {% if supplier.contact_person %}
+                                                — {{ supplier.contact_person }}
+                                            {% endif %}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn-primary">Save Supplier</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="4">No products found.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">SUPPLIER ORDERS</span>
+                    <h2>Automatic Restock Requests</h2>
+                    <p>Requests are created for the linked supplier when a sale takes a product's stock to zero.</p>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Request</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Supplier</th>
+                            <th>Customer Order</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for supplier_order in supplier_orders %}
+                        <tr>
+                            <td>#{{ supplier_order.id }}</td>
+                            <td>{{ supplier_order.product_name }}</td>
+                            <td>{{ supplier_order.quantity }}</td>
+                            <td>
+                                {{ supplier_order.supplier_name }}
+                                {% if supplier_order.supplier_contact %}
+                                    <small>{{ supplier_order.supplier_contact }}</small>
+                                {% endif %}
+                            </td>
+                            <td>{{ supplier_order.customer_order_id or '—' }}</td>
+                            <td><span class="status-badge">{{ supplier_order.status|title }}</span></td>
+                            <td>{{ supplier_order.created_at }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="7">No supplier restock requests found.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">01</span>
+
+                <h3>Users</h3>
+
+                <strong>{{ users|length }}</strong>
+
+                <p>Registered system users</p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">02</span>
+
+                <h3>Customers</h3>
+
+                <strong>{{ customers|length }}</strong>
+
+                <p>Registered customers</p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">03</span>
+
+                <h3>Designers</h3>
+
+                <strong>{{ designers|length }}</strong>
+
+                <p>Available designers</p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">04</span>
+
+                <h3>Services</h3>
+
+                <strong>{{ services|length }}</strong>
+
+                <p>Available services</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Users -->
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="section-tag">SYSTEM</span>
+                    <h2>Users</h2>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for user in users %}
+
+                        <tr>
+
+                            <td>{{ user.id }}</td>
+
+                            <td>{{ user.name }}</td>
+
+                            <td>{{ user.email }}</td>
+
+                            <td>
+                                <span class="status-badge">
+                                    {{ user.role }}
+                                </span>
+                            </td>
+
+                            <td>{{ user.status }}</td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="5">
+                                No users found.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- Customers -->
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="section-tag">CUSTOMERS</span>
+                    <h2>Customers</h2>
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for customer in customers %}
+
+                        <tr>
+
+                            <td>{{ customer.id }}</td>
+
+                            <td>{{ customer.user_id }}</td>
+
+                            <td>{{ customer.name }}</td>
+
+                            <td>{{ customer.phone }}</td>
+
+                            <td>{{ customer.city }}</td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="5">
+                                No customers found.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- Designers -->
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="section-tag">DESIGN TEAM</span>
+                    <h2>Designers</h2>
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>Status</th>
+                            <th>Current Workload</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for designer in designers %}
+
+                        <tr>
+
+                            <td>{{ designer.id }}</td>
+
+                            <td>{{ designer.full_name }}</td>
+
+                            <td>{{ designer.specialization }}</td>
+
+                            <td>{{ designer.status }}</td>
+                            <td>
+                                <strong>{{ designer.availability_label }}</strong> —
+                                {{ designer.workload_count }} active work item(s)<br>
+                                {{ designer.active_consultations }} consultation(s),
+                                {{ designer.active_projects }} project(s),
+                                {{ designer.upcoming_appointments }} upcoming appointment(s)
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="5">
+                                No designers found.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

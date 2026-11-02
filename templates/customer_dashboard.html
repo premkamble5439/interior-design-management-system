@@ -1,0 +1,611 @@
+{% extends "base.html" %}
+
+{% block title %}
+Customer Dashboard - Interior Design System
+{% endblock %}
+
+{% block head %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="customer-dashboard">
+
+    <!-- =====================================================
+         DASHBOARD HEADER
+         ===================================================== -->
+
+    <div class="dashboard-header">
+
+        <h1>
+            Welcome,
+            {{ user.name if user else 'Customer' }}
+        </h1>
+
+        <p>
+            Manage your interior design projects,
+            consultations, quotations and orders.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         DASHBOARD SUMMARY CARDS
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+        <!-- Projects -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                🏠
+            </div>
+
+            <h3>My Projects</h3>
+
+            <div class="card-number">
+                {{ projects|length if projects else 0 }}
+            </div>
+
+            <p>
+                Total projects
+            </p>
+
+        </div>
+
+
+        <!-- Consultations -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                📅
+            </div>
+
+            <h3>Consultations</h3>
+
+            <div class="card-number">
+                {{ consultations|length if consultations else 0 }}
+            </div>
+
+            <p>
+                Booked consultations
+            </p>
+
+        </div>
+
+
+        <!-- Quotations -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                💰
+            </div>
+
+            <h3>Quotations</h3>
+
+            <div class="card-number">
+                {{ quotations|length if quotations else 0 }}
+            </div>
+
+            <p>
+                Available quotations
+            </p>
+
+        </div>
+
+
+        <!-- Orders -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                🛒
+            </div>
+
+            <h3>Orders</h3>
+
+            <div class="card-number">
+                {{ orders|length if orders else 0 }}
+            </div>
+
+            <p>
+                Store orders
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN DASHBOARD CONTENT
+         ===================================================== -->
+
+    <div class="dashboard-content">
+
+
+        <!-- =================================================
+             PROJECTS
+             ================================================= -->
+
+        <div class="dashboard-section">
+
+            <h2>
+                My Projects
+            </h2>
+
+
+            {% if projects %}
+
+            <div class="project-list">
+
+                {% for project in projects %}
+
+                <div class="project-item">
+
+                    <div class="project-info">
+
+                        <h3>
+                            {{ project.project_name
+                               or project.name
+                               or 'Interior Design Project' }}
+                        </h3>
+
+                        <p>
+                            {{ project.project_type or 'Interior Design Project' }}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        {% set status =
+                            project.status|lower
+                            if project.status
+                            else 'pending'
+                        %}
+
+
+                        {% if status in ['completed', 'complete'] %}
+
+                            <span class="project-status status-completed">
+                                Completed
+                            </span>
+
+                        {% elif status in ['in progress', 'in_progress', 'progress'] %}
+
+                            <span class="project-status status-progress">
+                                In Progress
+                            </span>
+
+                        {% elif status in ['cancelled', 'canceled'] %}
+
+                            <span class="project-status status-cancelled">
+                                Cancelled
+                            </span>
+
+                        {% else %}
+
+                            <span class="project-status status-pending">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="project-details">
+                        <p><strong>Designer:</strong> {{ project.designer_name or 'Not assigned' }}</p>
+                        <p><strong>Start date:</strong> {{ project.display_start_date }}</p>
+                        <p><strong>Expected completion:</strong> {{ project.display_expected_end_date }}</p>
+                        <p><strong>Progress:</strong> {{ project.project_progress }}%</p>
+                        <div class="project-progress" role="progressbar"
+                             aria-label="Project progress"
+                             aria-valuemin="0" aria-valuemax="100"
+                             aria-valuenow="{{ project.project_progress }}">
+                            <span style="width: {{ project.project_progress }}%;"></span>
+                        </div>
+                        <p class="latest-project-update">
+                            <strong>Latest update:</strong>
+                            {{ project.latest_update_description
+                               or project.latest_update_title
+                               or 'No updates have been posted yet.' }}
+                        </p>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <h3>
+                    No Projects Yet
+                </h3>
+
+                <p>
+                    You don't have any interior design
+                    projects yet.
+                </p>
+
+                <a href="{{ url_for('consultation') }}"
+                   class="dashboard-button">
+
+                    Start a Project
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+             ================================================= -->
+
+        <div class="dashboard-section">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+
+            <div class="quick-actions">
+
+
+                <a href="{{ url_for('consultation') }}"
+                   class="quick-action">
+
+                    <div class="quick-action-icon">
+                        📅
+                    </div>
+
+                    <div>
+                        Book Consultation
+                    </div>
+
+                </a>
+
+
+                <a href="{{ url_for('quotation') }}"
+                   class="quick-action">
+
+                    <div class="quick-action-icon">
+                        💰
+                    </div>
+
+                    <div>
+                        View Quotations
+                    </div>
+
+                </a>
+
+
+                <a href="{{ url_for('project_tracking') }}"
+                   class="quick-action">
+
+                    <div class="quick-action-icon">
+                        📊
+                    </div>
+
+                    <div>
+                        Track Project
+                    </div>
+
+                </a>
+
+
+                <a href="{{ url_for('store') }}"
+                   class="quick-action">
+
+                    <div class="quick-action-icon">
+                        🛍️
+                    </div>
+
+                    <div>
+                        Visit Store
+                    </div>
+
+                </a>
+
+
+                <a href="{{ url_for('cart') }}"
+                   class="quick-action">
+
+                    <div class="quick-action-icon">
+                        🛒
+                    </div>
+
+                    <div>
+                        View Cart
+                    </div>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CUSTOMER CONSULTATIONS
+         ===================================================== -->
+
+    <div class="dashboard-section dashboard-full-section">
+        <h2>My Consultations</h2>
+
+        {% if consultations %}
+        <div class="dashboard-table-wrap">
+            <table class="quotation-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Date and time</th>
+                        <th>Status</th>
+                        <th>Assigned Designer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consultation in consultations %}
+                    <tr>
+                        <td>{{ consultation.service_name or 'Interior Design Consultation' }}</td>
+                        <td>
+                            {{ consultation.display_date }}
+                            {% if consultation.preferred_time %}
+                                · {{ consultation.preferred_time }}
+                            {% endif %}
+                        </td>
+                        <td>{{ (consultation.status or 'pending')|replace('_', ' ')|title }}</td>
+                        <td>
+                            {% if consultation.designer_name %}
+                                <strong>{{ consultation.designer_name }}</strong><br>
+                                {{ consultation.designer_email or 'Email not available' }}<br>
+                                {{ consultation.designer_phone or 'Phone not available' }}<br>
+                                {{ consultation.designer_specialization or 'Specialization not listed' }}
+                            {% else %}
+                                <span>Not assigned</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No Consultations Yet</h3>
+            <p>Your consultation requests and their status will appear here.</p>
+            <a href="{{ url_for('consultation') }}" class="dashboard-button">
+                Book Consultation
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <!-- =====================================================
+         CONSULTATION SECTION
+         ===================================================== -->
+
+    <div class="consultation-card">
+
+        <h2>
+            Need Help With Your Interior Design?
+        </h2>
+
+        <p>
+            Book a consultation with our professional
+            interior designers and discuss your project,
+            requirements and budget.
+        </p>
+
+        <a href="{{ url_for('consultation') }}"
+           class="consultation-button">
+
+            Book Consultation
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         RECENT QUOTATIONS
+         ===================================================== -->
+
+    <div class="dashboard-section"
+         style="margin-top: 25px;">
+
+        <h2>
+            Recent Quotations
+        </h2>
+
+
+        {% if quotations %}
+
+        <div style="overflow-x:auto;">
+
+            <table class="quotation-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Quotation ID
+                        </th>
+
+                        <th>
+                            Project
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for quotation in quotations %}
+
+                    <tr>
+
+                        <td>
+                            {{ quotation.id
+                               or quotation.quotation_id
+                               or 'N/A' }}
+                        </td>
+
+
+                        <td>
+                            {{ quotation.project_name
+                               or quotation.project
+                               or 'Interior Project' }}
+                        </td>
+
+
+                        <td>
+                            ₹{{ quotation.amount
+                                or quotation.total_amount
+                                or '0' }}
+                        </td>
+
+
+                        <td>
+
+                            {% if quotation.status %}
+
+                                {{ quotation.status }}
+
+                            {% else %}
+
+                                Pending
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>
+                No Quotations
+            </h3>
+
+            <p>
+                Your quotations will appear here.
+            </p>
+
+            <a href="{{ url_for('quotation') }}"
+               class="dashboard-button">
+
+                View Quotations
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================================
+         PROFILE
+         ===================================================== -->
+
+    <div class="dashboard-section"
+         style="margin-top: 25px;">
+
+        <h2>
+            My Profile
+        </h2>
+
+
+        <form action="{{ url_for('update_customer_profile') }}"
+              method="POST" class="profile-form">
+            <div class="profile-fields">
+                <label>
+                    Customer name
+                    <input type="text" name="name"
+                           value="{{ user.name if user else (customer.full_name if customer else '') }}"
+                           required>
+                </label>
+
+                <label>
+                    Email
+                    <input type="email" name="email"
+                           value="{{ user.email if user else (customer.email if customer else '') }}"
+                           required>
+                </label>
+
+                <label>
+                    Phone number
+                    <input type="tel" name="phone"
+                           value="{{ user.phone if user else (customer.phone if customer else '') }}">
+                </label>
+
+                <label>
+                    Address
+                    <textarea name="address" rows="3">{{ user.address if user else (customer.address if customer else '') }}</textarea>
+                </label>
+
+                <div class="profile-registration-date">
+                    <strong>Registration date:</strong>
+                    {{ customer.registration_date_display if customer
+                       else (user.created_at if user and user.created_at else 'Unavailable') }}
+                </div>
+            </div>
+
+            <button type="submit" class="dashboard-button">
+                Update Profile
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

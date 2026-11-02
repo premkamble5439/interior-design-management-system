@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Payment - Interior Design Studio{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/payment.css') }}">
+
+<div class="payment-page">
+
+    <div class="payment-header">
+        <h1>Secure Payment</h1>
+        <p>Complete your payment securely for your interior design order.</p>
+    </div>
+
+    <div class="payment-container">
+
+        <!-- LEFT SIDE -->
+        <div class="payment-info">
+
+            <div class="payment-icon">
+                💳
+            </div>
+
+            <h2>Complete Your Payment</h2>
+
+            <p>
+                Please review your order details and select your preferred
+                payment method.
+            </p>
+
+            <div class="security-box">
+                <span>🔒</span>
+                <div>
+                    <strong>Secure Payment</strong>
+                    <p>
+                        Your payment information is handled securely.
+                    </p>
+                </div>
+            </div>
+
+            <div class="payment-method-info">
+                <h3>Available Payment Methods</h3>
+
+                <div class="method-item">
+                    <span>💳</span>
+                    <div>
+                        <strong>Razorpay Test Mode</strong>
+                        <small>Test payments by card, UPI or net banking</small>
+                    </div>
+                </div>
+
+                <div class="method-item">
+                    <span>📱</span>
+                    <div>
+                        <strong>UPI</strong>
+                        <small>Pay using your UPI application</small>
+                    </div>
+                </div>
+
+                <div class="method-item">
+                    <span>🏦</span>
+                    <div>
+                        <strong>Net Banking</strong>
+                        <small>Pay through your bank account</small>
+                    </div>
+                </div>
+
+                <div class="method-item">
+                    <span>💵</span>
+                    <div>
+                        <strong>Cash</strong>
+                        <small>Cash payment option</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="payment-card">
+
+            <div class="card-heading">
+                <h2>Payment Details</h2>
+                <span>🔒 Secure</span>
+            </div>
+
+            <!-- FLASH MESSAGES -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="payment-alert {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+
+            {% if payment_success %}
+
+            <div class="payment-alert success" role="status">
+                <strong>Payment successful.</strong>
+                Your order #{{ order_id }} has been placed.
+                {% if transaction_id %}
+                    <br>Razorpay payment ID: {{ transaction_id }}
+                {% endif %}
+            </div>
+
+            <a href="{{ url_for('customer_dashboard') }}" class="pay-button">
+                View My Orders
+            </a>
+
+            {% else %}
+
+            {% if not razorpay_test_enabled %}
+                <div class="payment-alert error" role="alert">
+                    Razorpay Test Mode is not configured. Set
+                    <code>RAZORPAY_KEY_ID</code> and
+                    <code>RAZORPAY_KEY_SECRET</code> before using it.
+                </div>
+            {% endif %}
+
+            <!-- ORDER SUMMARY -->
+            <div class="order-summary">
+
+                <h3>Order Summary</h3>
+
+                <div class="summary-row">
+                    <span>Order ID</span>
+
+                    <strong>
+                        #{{ order.id if order else order_id }}
+                    </strong>
+                </div>
+
+                <div class="summary-row total-row">
+                    <span>Total Amount</span>
+
+                    <strong>
+                       ₹{{ "%.2f"|format(total) }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT FORM -->
+            <form method="POST"
+                  action="{{ url_for('payment', order_id=order.id) if order else url_for('payment') }}"
+                  id="paymentForm">
+
+
+                <!-- PAYMENT METHOD -->
+                <div class="form-group">
+
+                    <label for="payment_method">
+                        Payment Method <span>*</span>
+                    </label>
+
+                    <select id="payment_method"
+                            name="payment_method"
+                            required>
+
+                        <option value="">
+                            -- Select Payment Method --
+                        </option>
+
+                        <option value="razorpay"
+                                {% if not razorpay_test_enabled %}disabled{% endif %}>
+                            💳 Razorpay (Test Mode)
+                        </option>
+
+                        <option value="cash">
+                            💵 Cash
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TERMS -->
+                <div class="terms">
+
+                    <input type="checkbox"
+                           id="terms"
+                           required>
+
+                    <label for="terms">
+                        I confirm that the payment details provided are
+                        correct.
+                    </label>
+
+                </div>
+
+
+                <!-- BUTTON -->
+                <button type="submit"
+                        class="pay-button"
+                        id="payButton">
+
+                    🔒 Pay Now
+
+                </button>
+
+            </form>
+
+            {% endif %}
+
+            <div class="payment-footer">
+
+                <span>🔒 Secure Payment</span>
+
+                <span>•</span>
+
+                <span>Interior Design Studio</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const paymentForm =
+        document.getElementById("paymentForm");
+
+    if (!paymentForm) return;
+
+    const paymentMethod = document.getElementById("payment_method");
+    const payButton = document.getElementById("payButton");
+
+    paymentForm.addEventListener("submit", async function (event) {
+        if (paymentMethod.value !== "razorpay") return;
+
+        event.preventDefault();
+
+        if (!window.Razorpay) {
+            alert("Razorpay Checkout could not be loaded. Please try again.");
+            return;
+        }
+
+        payButton.disabled = true;
+        payButton.textContent = "Connecting to Razorpay...";
+
+        try {
+            const response = await fetch(
+                "{{ url_for('create_razorpay_order') }}",
+                {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    credentials: "same-origin"
+                }
+            );
+            const order = await response.json();
+
+            if (!response.ok) {
+                throw new Error(order.error || "Could not start payment.");
+            }
+
+            const checkout = new Razorpay({
+                key: order.key,
+                order_id: order.order_id,
+                amount: order.amount,
+                currency: order.currency,
+                name: "Interior Design Studio",
+                description: "Store order payment",
+                prefill: {
+                    name: {{ (current_user.name if current_user else "")|tojson }},
+                    email: {{ (current_user.email if current_user else "")|tojson }},
+                    contact: {{ (current_user.phone if current_user else "")|tojson }}
+                },
+                theme: {color: "#b88945"},
+                handler: function (result) {
+                    [
+                        ["razorpay_order_id", result.razorpay_order_id],
+                        ["razorpay_payment_id", result.razorpay_payment_id],
+                        ["razorpay_signature", result.razorpay_signature]
+                    ].forEach(function (entry) {
+                        const input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = entry[0];
+                        input.value = entry[1];
+                        paymentForm.appendChild(input);
+                    });
+                    paymentForm.submit();
+                },
+                modal: {
+                    ondismiss: function () {
+                        payButton.disabled = false;
+                        payButton.textContent = "🔒 Pay Now";
+                    }
+                }
+            });
+
+            checkout.on("payment.failed", function (result) {
+                alert(
+                    result.error.description ||
+                    "Payment failed. Please try again."
+                );
+                payButton.disabled = false;
+                payButton.textContent = "🔒 Pay Now";
+            });
+
+            checkout.open();
+        } catch (error) {
+            alert(error.message || "Could not start Razorpay checkout.");
+            payButton.disabled = false;
+            payButton.textContent = "🔒 Pay Now";
+        }
+    });
+});
+
+</script>
+
+{% endblock %}

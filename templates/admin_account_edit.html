@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ account.role|title }} Account | Admin{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_accounts.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section admin-dashboard-page admin-accounts-page">
+    <div class="container">
+        <div class="dashboard-header">
+            <div>
+                <span class="section-tag">ACCOUNT MANAGEMENT</span>
+                <h1>Edit {{ account.role|title }} Account</h1>
+                <p>Update profile details for {{ account.name }}.</p>
+            </div>
+            <a href="{{ url_for('admin_accounts') }}" class="btn-outline">Back to accounts</a>
+        </div>
+
+        <div class="dashboard-panel account-edit-panel">
+            <form method="POST"
+                  action="{{ url_for('admin_edit_account', user_id=account.id) }}"
+                  class="account-edit-form">
+                <div class="account-form-grid">
+                    <label>
+                        Full name
+                        <input type="text" name="name" value="{{ account.name }}" maxlength="100" required>
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" value="{{ account.email }}" maxlength="150" required>
+                    </label>
+                    <label>
+                        Phone
+                        <input type="tel" name="phone" value="{{ account.phone or '' }}" maxlength="20">
+                    </label>
+                    <label>
+                        Address
+                        <input type="text" name="address" value="{{ account.address or '' }}">
+                    </label>
+
+                    {% if account.role == 'customer' %}
+                    <label>
+                        City
+                        <input type="text" name="city" value="{{ account.city or '' }}" maxlength="100">
+                    </label>
+                    {% endif %}
+
+                    {% if account.role in ['supplier', 'contractor'] %}
+                    <label>
+                        Company name
+                        <input type="text" name="company_name" value="{{ account.company_name or '' }}" maxlength="150" required>
+                    </label>
+                    <label>
+                        Contact person
+                        <input type="text" name="contact_person" value="{{ account.contact_person or account.name }}" maxlength="100">
+                    </label>
+                    {% endif %}
+
+                    {% if account.role in ['designer', 'contractor'] %}
+                    <label>
+                        Specialization
+                        <input type="text" name="specialization" value="{{ account.specialization or '' }}" maxlength="150">
+                    </label>
+                    {% endif %}
+                </div>
+
+                <div class="account-form-actions">
+                    <button type="submit" class="btn-primary">Save changes</button>
+                    <a href="{{ url_for('admin_accounts') }}" class="account-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

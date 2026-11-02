@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+
+{% block title %}
+Gallery | Interior Design System
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     GALLERY HERO
+     ===================================================== -->
+
+<section class="gallery-hero">
+
+    <div class="gallery-hero-content">
+
+        <p class="section-tag">
+            OUR GALLERY
+        </p>
+
+        <h1>
+            Inspiration For Your
+            <span>Dream Space</span>
+        </h1>
+
+        <p>
+            Explore a collection of interior design
+            ideas, modern spaces and beautiful
+            environments created to inspire you.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GALLERY INTRO
+     ===================================================== -->
+
+<section class="gallery-section">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            DESIGN INSPIRATION
+        </p>
+
+        <h2>
+            Explore Our Interior Designs
+        </h2>
+
+        <p>
+            Browse different styles and spaces to
+            find inspiration for your next project.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         GALLERY FILTERS
+         ================================================= -->
+
+    <div class="gallery-filters">
+
+        <button class="gallery-filter active"
+                data-filter="all">
+            All
+        </button>
+
+        <button class="gallery-filter"
+                data-filter="living">
+            Living Room
+        </button>
+
+        <button class="gallery-filter"
+                data-filter="bedroom">
+            Bedroom
+        </button>
+
+        <button class="gallery-filter"
+                data-filter="kitchen">
+            Kitchen
+        </button>
+
+        <button class="gallery-filter"
+                data-filter="office">
+            Office
+        </button>
+
+    </div>
+
+
+    <!-- =================================================
+         GALLERY GRID
+         ================================================= -->
+
+    <div class="gallery-grid">
+
+
+        <!-- IMAGE 1 -->
+
+        <div class="gallery-item"
+             data-category="living">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/living-room-1.jpg') }}"
+                alt="Modern Living Room">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Modern Living Room
+                </h3>
+
+                <p>
+                    Contemporary Interior
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 2 -->
+
+        <div class="gallery-item"
+             data-category="bedroom">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/bedroom-1.jpg') }}"
+                alt="Modern Bedroom">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Modern Bedroom
+                </h3>
+
+                <p>
+                    Minimal Interior
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 3 -->
+
+        <div class="gallery-item"
+             data-category="kitchen">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/kitchen-1.jpg') }}"
+                alt="Modern Kitchen">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Modern Kitchen
+                </h3>
+
+                <p>
+                    Functional Design
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 4 -->
+
+        <div class="gallery-item"
+             data-category="office">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/office-1.jpg') }}"
+                alt="Modern Office">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Modern Office
+                </h3>
+
+                <p>
+                    Professional Workspace
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 5 -->
+
+        <div class="gallery-item"
+             data-category="living">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/living-room-2.jpg') }}"
+                alt="Luxury Living Room">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Luxury Living Room
+                </h3>
+
+                <p>
+                    Luxury Interior
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 6 -->
+
+        <div class="gallery-item"
+             data-category="bedroom">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/bedroom-2.jpg') }}"
+                alt="Luxury Bedroom">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Luxury Bedroom
+                </h3>
+
+                <p>
+                    Elegant Interior
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 7 -->
+
+        <div class="gallery-item"
+             data-category="kitchen">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/kitchen-2.jpg') }}"
+                alt="Luxury Kitchen">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Luxury Kitchen
+                </h3>
+
+                <p>
+                    Premium Interior
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE 8 -->
+
+        <div class="gallery-item"
+             data-category="office">
+
+            <img
+                src="{{ url_for('static',
+                        filename='images/office-2.jpg') }}"
+                alt="Creative Office">
+
+            <div class="gallery-overlay">
+
+                <h3>
+                    Creative Office
+                </h3>
+
+                <p>
+                    Modern Workspace
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GALLERY CTA
+     ===================================================== -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <p class="section-tag">
+            CREATE YOUR SPACE
+        </p>
+
+        <h2>
+            Inspired By What You See?
+        </h2>
+
+        <p>
+            Turn your favourite ideas into a
+            personalized interior design project.
+        </p>
+
+        <div class="cta-buttons">
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Book Consultation
+            </a>
+
+            <a href="{{ url_for('designer') }}"
+               class="btn-outline">
+                Find A Designer
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const filters =
+        document.querySelectorAll(".gallery-filter");
+
+    const items =
+        document.querySelectorAll(".gallery-item");
+
+
+    filters.forEach(function (filter) {
+
+        filter.addEventListener("click", function () {
+
+            filters.forEach(function (button) {
+
+                button.classList.remove("active");
+
+            });
+
+            this.classList.add("active");
+
+
+            const category =
+                this.getAttribute("data-filter");
+
+
+            items.forEach(function (item) {
+
+                if (
+                    category === "all" ||
+                    item.getAttribute("data-category") === category
+                ) {
+
+                    item.style.display = "block";
+
+                } else {
+
+                    item.style.display = "none";
+
+                }
+
+            });
+
+        });
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

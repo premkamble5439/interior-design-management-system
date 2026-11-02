@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - Interior Design Studio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/cart.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="cart-page">
+
+    <div class="cart-header">
+        <span>YOUR SHOPPING CART</span>
+
+        <h1>Shopping Cart</h1>
+
+        <p>
+            Review the products you selected for your space.
+        </p>
+    </div>
+
+
+    <div class="cart-container">
+
+        {% if cart_items %}
+
+        <!-- ================= CART ITEMS ================= -->
+
+        <div class="cart-items">
+
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+                <!-- PRODUCT IMAGE -->
+                <div class="cart-product-image">
+
+                    {% if item.image %}
+
+                    <img
+                        src="{{ url_for('static', filename='images/' + item.image) }}"
+                        alt="{{ item.name }}"
+                    >
+
+                    {% else %}
+
+                    <span>◇</span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PRODUCT INFORMATION -->
+                <div class="cart-product-info">
+
+                    <span>
+                        {{ item.category or 'INTERIOR' }}
+                    </span>
+
+                    <h2>
+                        {{ item.name }}
+                    </h2>
+
+                    <p>
+                        ₹{{ "%.2f"|format(item.price or 0) }}
+                    </p>
+
+                </div>
+
+
+                <!-- QUANTITY -->
+                <div class="quantity">
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <form
+                        action="{{ url_for('update_cart', item_key=item.key) }}"
+                        method="POST"
+                        class="quantity-form"
+                    >
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="decrease"
+                            class="quantity-btn"
+                        >
+                            −
+                        </button>
+
+                        <strong>
+                            {{ item.quantity }}
+                        </strong>
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="increase"
+                            class="quantity-btn"
+                        >
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- ITEM TOTAL -->
+                <div class="item-total">
+
+                    ₹{{ "%.2f"|format(
+                        (item.price or 0) * item.quantity
+                    ) }}
+
+                </div>
+
+
+                <!-- REMOVE -->
+                <div class="remove-item">
+
+                    <form
+                        action="{{ url_for('remove_from_cart', item_key=item.key) }}"
+                        method="POST"
+                    >
+
+                        <button
+                            type="submit"
+                            class="remove-btn"
+                            title="Remove item"
+                        >
+                            ×
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- ================= ORDER SUMMARY ================= -->
+
+        <div class="cart-summary">
+
+            <h2>
+                Order Summary
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(subtotal or 0) }}
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    GST
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(tax or 0) }}
+                </strong>
+
+            </div>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(total or 0) }}
+                </strong>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+            <a
+                href="{{ url_for('payment') }}"
+                class="checkout-btn"
+            >
+                Proceed to Payment →
+            </a>
+
+
+            <!-- STORE -->
+            <a
+                href="{{ url_for('store') }}"
+                class="continue-shopping"
+            >
+                ← Continue Shopping
+            </a>
+
+        </div>
+
+
+        <!-- ================= CART ACTIONS ================= -->
+
+        <div class="cart-actions">
+
+            <form
+                action="{{ url_for('clear_cart') }}"
+                method="POST"
+            >
+
+                <button
+                    type="submit"
+                    class="clear-cart-btn"
+                    onclick="return confirm('Are you sure you want to clear your cart?');"
+                >
+                    Clear Cart
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- ================= EMPTY CART ================= -->
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+                ◇
+            </div>
+
+            <h2>
+                Your Cart is Empty
+            </h2>
+
+            <p>
+                You haven't added any products yet.
+            </p>
+
+            <a
+                href="{{ url_for('store') }}"
+                class="shop-btn"
+            >
+                Browse Store
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

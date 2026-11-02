@@ -1,0 +1,493 @@
+/* =========================================
+   PAYMENT PAGE
+========================================= */
+
+.payment-page {
+    min-height: 100vh;
+    background: #f5f7fa;
+    padding: 50px 6%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.payment-header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: #1f2937;
+}
+
+.payment-header p {
+    font-size: 17px;
+    color: #6b7280;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.payment-container {
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+
+    gap: 35px;
+}
+
+
+/* =========================================
+   LEFT INFORMATION
+========================================= */
+
+.payment-info {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.payment-icon {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #f3e8d3;
+
+    font-size: 32px;
+
+    margin-bottom: 25px;
+}
+
+.payment-info h2 {
+    font-size: 30px;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.payment-info > p {
+    color: #6b7280;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+
+/* =========================================
+   SECURITY BOX
+========================================= */
+
+.security-box {
+    display: flex;
+    gap: 15px;
+
+    margin: 30px 0;
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border-left: 4px solid #b88945;
+
+    border-radius: 10px;
+}
+
+.security-box span {
+    font-size: 25px;
+}
+
+.security-box strong {
+    color: #1f2937;
+}
+
+.security-box p {
+    margin-top: 5px;
+    margin-bottom: 0;
+
+    color: #6b7280;
+}
+
+
+/* =========================================
+   PAYMENT METHODS
+========================================= */
+
+.payment-method-info h3 {
+    font-size: 21px;
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+.method-item {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.method-item span {
+    font-size: 25px;
+}
+
+.method-item strong {
+    display: block;
+    color: #374151;
+}
+
+.method-item small {
+    display: block;
+    margin-top: 4px;
+    color: #9ca3af;
+}
+
+
+/* =========================================
+   PAYMENT CARD
+========================================= */
+
+.payment-card {
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.card-heading h2 {
+    margin: 0;
+    color: #1f2937;
+}
+
+.card-heading span {
+    background: #ecfdf5;
+    color: #047857;
+
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   ALERT
+========================================= */
+
+.payment-alert {
+    padding: 14px 18px;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+
+    font-size: 14px;
+}
+
+.payment-alert.error {
+    background: #fef2f2;
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+}
+
+.payment-alert.success {
+    background: #ecfdf5;
+    color: #047857;
+
+    border: 1px solid #a7f3d0;
+}
+
+
+/* =========================================
+   ORDER SUMMARY
+========================================= */
+
+.order-summary {
+    background: #f8fafc;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+}
+
+.order-summary h3 {
+    margin-top: 0;
+    color: #374151;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    color: #6b7280;
+}
+
+.total-row {
+    margin-top: 10px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #d1d5db;
+
+    font-size: 20px;
+
+    color: #1f2937;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.form-group label span {
+    color: #dc2626;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    background: white;
+
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #b88945;
+
+    box-shadow: 0 0 0 3px rgba(184, 137, 69, 0.12);
+}
+
+.form-group small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   CARD ROW
+========================================= */
+
+.card-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+}
+
+
+/* =========================================
+   CONDITIONAL SECTIONS
+========================================= */
+
+.conditional-section {
+    display: none;
+
+    padding: 18px;
+
+    background: #fafafa;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   TERMS
+========================================= */
+
+.terms {
+    display: flex;
+
+    gap: 10px;
+
+    align-items: flex-start;
+
+    margin: 25px 0;
+}
+
+.terms input {
+    margin-top: 4px;
+}
+
+.terms label {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   PAY BUTTON
+========================================= */
+
+.pay-button {
+    display: block;
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #b88945;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+}
+
+.pay-button:hover {
+    background: #946d37;
+
+    transform: translateY(-2px);
+}
+
+.pay-button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+    transform: none;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.payment-footer {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    color: #9ca3af;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .payment-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .payment-page {
+        padding: 30px 15px;
+    }
+
+    .payment-header h1 {
+        font-size: 32px;
+    }
+
+    .payment-info,
+    .payment-card {
+        padding: 25px;
+    }
+
+    .card-row {
+        grid-template-columns: 1fr;
+    }
+
+    .card-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+}

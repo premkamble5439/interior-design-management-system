@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}My Quotations - Interior Design System{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/customer_pages.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="customer-page">
+
+    <!-- HEADER -->
+    <section class="page-hero">
+
+        <div>
+
+            <span class="page-label">
+                PROJECT FINANCE
+            </span>
+
+            <h1>My Quotations</h1>
+
+            <p>
+                Review your interior design quotations,
+                estimates and quotation status.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            ₹
+        </div>
+
+    </section>
+
+
+    <!-- QUOTATION CONTENT -->
+
+    {% if quotations %}
+
+    <div class="quotation-grid">
+
+        {% for quotation in quotations %}
+
+        <div class="quotation-card">
+
+
+            <!-- QUOTATION HEADER -->
+
+            <div class="quotation-top">
+
+                <div>
+
+                    <span class="quotation-label">
+                        QUOTATION
+                    </span>
+
+                    <h2>
+                        {{ quotation.quotation_number }}
+                    </h2>
+
+                </div>
+
+
+                {% set status =
+                    quotation.status|lower
+                    if quotation.status
+                    else 'draft'
+                %}
+
+
+                {% if status == 'approved' %}
+
+                    <span class="status-badge status-approved">
+                        Approved
+                    </span>
+
+                {% elif status == 'sent' %}
+
+                    <span class="status-badge status-sent">
+                        Sent
+                    </span>
+
+                {% elif status == 'rejected' %}
+
+                    <span class="status-badge status-rejected">
+                        Rejected
+                    </span>
+
+                {% elif status == 'expired' %}
+
+                    <span class="status-badge status-expired">
+                        Expired
+                    </span>
+
+                {% else %}
+
+                    <span class="status-badge status-draft">
+                        Draft
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PROJECT -->
+
+            <div class="quotation-project">
+
+                <span>Project</span>
+
+                <strong>
+
+                    {{ quotation.project_name
+                       if quotation.project_name
+                       else 'Interior Design Project' }}
+
+                </strong>
+
+            </div>
+
+
+            <!-- AMOUNT DETAILS -->
+
+            <div class="amount-list">
+
+                <div>
+
+                    <span>Base Amount</span>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(quotation.amount|float) }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Tax</span>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(quotation.tax_amount|float) }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Discount</span>
+
+                    <strong>
+                        - ₹{{ "%.2f"|format(quotation.discount_amount|float) }}
+                    </strong>
+
+                </div>
+
+
+                <div class="total-row">
+
+                    <span>Total Amount</span>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(quotation.final_amount|float) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            {% if quotation.description %}
+
+            <div class="quotation-description">
+
+                <h3>Description</h3>
+
+                <p>
+                    {{ quotation.description }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- VALIDITY -->
+
+            <div class="quotation-footer">
+
+                <div>
+
+                    <span>Valid Until</span>
+
+                    <strong>
+                        {{ quotation.valid_until
+                           if quotation.valid_until
+                           else 'Not specified' }}
+                    </strong>
+
+                </div>
+
+
+                {% if status == 'sent' %}
+
+                <div class="quotation-actions">
+
+                    <form method="POST"
+                          action="{{ url_for('approve_quotation',
+                                            quotation_id=quotation.id) }}">
+
+                        <button type="submit"
+                                class="primary-btn small-btn">
+
+                            Accept Quote
+
+                        </button>
+
+                    </form>
+
+
+                    <form method="POST"
+                          action="{{ url_for('reject_quotation',
+                                            quotation_id=quotation.id) }}">
+
+                        <button type="submit"
+                                class="outline-btn small-btn">
+
+                            Reject
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <!-- EMPTY -->
+
+    <div class="empty-page">
+
+        <div class="empty-icon">
+            ₹
+        </div>
+
+        <h2>No Quotations Available</h2>
+
+        <p>
+            Your quotations will appear here once
+            a quotation has been prepared for your project.
+        </p>
+
+        <a href="{{ url_for('consultation') }}"
+           class="primary-btn">
+
+            Book Consultation
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

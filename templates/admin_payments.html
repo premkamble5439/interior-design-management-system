@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Razorpay Payments | Admin{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_payments.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="payments-dashboard">
+    <header class="payments-header">
+        <div>
+            <span class="payments-eyebrow">ADMIN · PAYMENTS</span>
+            <h1>Razorpay transactions</h1>
+            <p>Recent Razorpay payments recorded for customer orders.</p>
+        </div>
+        <a class="payments-back" href="{{ url_for('admin_dashboard') }}">
+            Back to admin dashboard
+        </a>
+    </header>
+
+    <section class="payments-stats" aria-label="Payment summary">
+        <article class="payments-stat">
+            <span>Razorpay transactions</span>
+            <strong>{{ payment_summary.transaction_count or 0 }}</strong>
+        </article>
+        <article class="payments-stat">
+            <span>Captured payments</span>
+            <strong>{{ payment_summary.captured_count or 0 }}</strong>
+        </article>
+        <article class="payments-stat payments-stat-total">
+            <span>Total captured</span>
+            <strong>₹{{ "%.2f"|format(payment_summary.captured_total or 0) }}</strong>
+        </article>
+    </section>
+
+    <section class="payments-panel">
+        <div class="payments-panel-heading">
+            <div>
+                <h2>Recent activity</h2>
+                <p>Showing the latest 100 Razorpay transactions.</p>
+            </div>
+            <span class="payments-mode">Razorpay</span>
+        </div>
+
+        <div class="payments-table-wrap">
+            <table class="payments-table">
+                <thead>
+                    <tr>
+                        <th>Payment</th>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Paid / Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>
+                            <strong>#{{ payment.id }}</strong>
+                            <small>{{ payment.transaction_id or "No transaction ID" }}</small>
+                        </td>
+                        <td>#{{ payment.order_id }}</td>
+                        <td>
+                            <strong>{{ payment.customer_name }}</strong>
+                            <small>{{ payment.customer_email or "" }}</small>
+                        </td>
+                        <td class="payments-amount">₹{{ "%.2f"|format(payment.amount or 0) }}</td>
+                        <td>
+                            <span class="payment-status status-{{ (payment.status or 'unknown')|lower }}">
+                                {{ (payment.status or "unknown")|replace("_", " ")|title }}
+                            </span>
+                        </td>
+                        <td>
+                            {{ payment.paid_at or payment.created_at or "—" }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td class="payments-empty" colspan="6">
+                            <strong>No Razorpay transactions yet</strong>
+                            <span>Successful or pending Razorpay payments will appear here.</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}

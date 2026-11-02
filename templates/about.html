@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}
+About | Interior Design System
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     ABOUT HERO
+     ========================= -->
+
+<section class="about-hero">
+
+    <div class="about-hero-content">
+
+        <p class="section-tag">
+            ABOUT US
+        </p>
+
+        <h1>
+            Designing Spaces.
+            <span>Creating Experiences.</span>
+        </h1>
+
+        <p>
+            Interior Design System brings customers,
+            designers, contractors and suppliers
+            together through one integrated platform.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT INTRODUCTION
+     ========================= -->
+
+<section class="about-preview">
+
+    <div class="about-preview-image">
+
+        <img
+            src="{{ url_for('static',
+                    filename='images/interior-about.jpg') }}"
+            alt="Interior Design">
+
+    </div>
+
+
+    <div class="about-preview-content">
+
+        <p class="section-tag">
+            WHO WE ARE
+        </p>
+
+        <h2>
+            A Complete Platform For
+            Interior Design Management
+        </h2>
+
+        <p>
+            Interior Design System is designed to
+            simplify and organize the complete
+            interior design process.
+        </p>
+
+        <p>
+            Instead of managing designers,
+            consultations, quotations, projects,
+            contractors, suppliers and purchases
+            separately, our system brings these
+            activities together in one platform.
+        </p>
+
+        <p>
+            The system provides dedicated features
+            for customers, designers, contractors,
+            suppliers and administrators.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     OUR MISSION
+     ========================= -->
+
+<section class="about-mission">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            OUR MISSION
+        </p>
+
+        <h2>
+            Making Interior Design
+            Simple & Organized
+        </h2>
+
+        <p>
+            Our goal is to make the interior design
+            journey easier for everyone involved.
+        </p>
+
+    </div>
+
+
+    <div class="mission-grid">
+
+        <div class="mission-card">
+
+            <div class="mission-icon">
+                🎯
+            </div>
+
+            <h3>
+                Customer Focus
+            </h3>
+
+            <p>
+                Help customers discover designers,
+                request consultations, receive
+                quotations and track their projects.
+            </p>
+
+        </div>
+
+
+        <div class="mission-card">
+
+            <div class="mission-icon">
+                💡
+            </div>
+
+            <h3>
+                Smart Management
+            </h3>
+
+            <p>
+                Organize project information,
+                appointments, quotations and
+                communication in one system.
+            </p>
+
+        </div>
+
+
+        <div class="mission-card">
+
+            <div class="mission-icon">
+                🤝
+            </div>
+
+            <h3>
+                Collaboration
+            </h3>
+
+            <p>
+                Connect customers, designers,
+                contractors and suppliers for
+                efficient project coordination.
+            </p>
+
+        </div>
+
+
+        <div class="mission-card">
+
+            <div class="mission-icon">
+                🏠
+            </div>
+
+            <h3>
+                Better Spaces
+            </h3>
+
+            <p>
+                Support the creation of beautiful,
+                practical and personalized interior
+                spaces.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     USER TYPES
+     ========================= -->
+
+<section class="user-types">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            OUR USERS
+        </p>
+
+        <h2>
+            One Platform For Everyone
+        </h2>
+
+    </div>
+
+
+    <div class="user-grid">
+
+        <div class="user-card">
+
+            <span>01</span>
+
+            <h3>
+                Customers
+            </h3>
+
+            <p>
+                Find designers, request
+                consultations, receive quotations,
+                track projects and purchase products.
+            </p>
+
+        </div>
+
+
+        <div class="user-card">
+
+            <span>02</span>
+
+            <h3>
+                Designers
+            </h3>
+
+            <p>
+                Manage profiles, customer
+                requirements, proposals, quotations
+                and project updates.
+            </p>
+
+        </div>
+
+
+        <div class="user-card">
+
+            <span>03</span>
+
+            <h3>
+                Contractors
+            </h3>
+
+            <p>
+                View assigned projects, update
+                work progress and submit project
+                status updates.
+            </p>
+
+        </div>
+
+
+        <div class="user-card">
+
+            <span>04</span>
+
+            <h3>
+                Suppliers
+            </h3>
+
+            <p>
+                Manage products, inventory,
+                pricing and customer or project
+                orders.
+            </p>
+
+        </div>
+
+
+        <div class="user-card">
+
+            <span>05</span>
+
+            <h3>
+                Administrators
+            </h3>
+
+            <p>
+                Manage users, roles, system
+                information and monitor the
+                complete platform.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+     ========================= -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <p class="section-tag">
+            GET STARTED
+        </p>
+
+        <h2>
+            Let's Create Your
+            Perfect Space
+        </h2>
+
+        <p>
+            Start your interior design journey
+            with our complete management platform.
+        </p>
+
+        <div class="cta-buttons">
+
+            <a href="{{ url_for('register') }}"
+               class="btn-primary">
+                Get Started
+            </a>
+
+            <a href="{{ url_for('services') }}"
+               class="btn-outline">
+                Explore Services
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+
+{% block title %}
+Services | Interior Design System
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     SERVICES HERO
+     ===================================================== -->
+
+<section class="services-hero">
+
+    <div class="services-hero-content">
+
+        <p class="section-tag">
+            OUR SERVICES
+        </p>
+
+        <h1>
+            Complete Interior
+            <span>Design Solutions</span>
+        </h1>
+
+        <p>
+            From planning and consultation to project
+            management and completion, our platform
+            helps you manage every stage of your
+            interior design journey.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SERVICES INTRO
+     ===================================================== -->
+
+<section class="services-intro">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            WHAT WE DO
+        </p>
+
+        <h2>
+            Everything You Need
+            For Your Dream Space
+        </h2>
+
+        <p>
+            Explore our interior design services and
+            find the right solution for your home,
+            office or commercial space.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN SERVICES
+     ===================================================== -->
+
+<section class="services-list">
+
+    <div class="service-large-card">
+
+        <div class="service-image">
+            <img
+                src="{{ url_for('static',
+                        filename='images/residential.jpg') }}"
+                alt="Residential Interior Design">
+        </div>
+
+        <div class="service-content">
+
+            <span class="service-number">
+                01
+            </span>
+
+            <h2>
+                Residential Interior Design
+            </h2>
+
+            <p>
+                Transform your house, apartment or
+                villa into a beautiful and comfortable
+                living space designed around your
+                lifestyle.
+            </p>
+
+            <ul>
+                <li>Living Room Design</li>
+                <li>Bedroom Design</li>
+                <li>Kitchen Design</li>
+                <li>Bathroom Design</li>
+                <li>Complete Home Interiors</li>
+            </ul>
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Book Consultation
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-large-card reverse">
+
+        <div class="service-image">
+            <img
+                src="{{ url_for('static',
+                        filename='images/commercial.jpg') }}"
+                alt="Commercial Interior Design">
+        </div>
+
+        <div class="service-content">
+
+            <span class="service-number">
+                02
+            </span>
+
+            <h2>
+                Commercial Interior Design
+            </h2>
+
+            <p>
+                Create professional and attractive
+                commercial spaces that reflect your
+                brand and improve the experience of
+                your customers and employees.
+            </p>
+
+            <ul>
+                <li>Office Interiors</li>
+                <li>Retail Spaces</li>
+                <li>Restaurants</li>
+                <li>Showrooms</li>
+                <li>Business Spaces</li>
+            </ul>
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Book Consultation
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-large-card">
+
+        <div class="service-image">
+            <img
+                src="{{ url_for('static',
+                        filename='images/space-planning.jpg') }}"
+                alt="Space Planning">
+        </div>
+
+        <div class="service-content">
+
+            <span class="service-number">
+                03
+            </span>
+
+            <h2>
+                Space Planning
+            </h2>
+
+            <p>
+                Make the most of your available space
+                with practical layouts and carefully
+                planned furniture placement.
+            </p>
+
+            <ul>
+                <li>Floor Planning</li>
+                <li>Furniture Arrangement</li>
+                <li>Room Optimization</li>
+                <li>Functional Layouts</li>
+                <li>Space Utilization</li>
+            </ul>
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Get Consultation
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-large-card reverse">
+
+        <div class="service-image">
+            <img
+                src="{{ url_for('static',
+                        filename='images/interior-consultation.jpg') }}"
+                alt="Interior Consultation">
+        </div>
+
+        <div class="service-content">
+
+            <span class="service-number">
+                04
+            </span>
+
+            <h2>
+                Interior Consultation
+            </h2>
+
+            <p>
+                Discuss your ideas, requirements and
+                budget with an interior design professional
+                before starting your project.
+            </p>
+
+            <ul>
+                <li>Design Consultation</li>
+                <li>Budget Planning</li>
+                <li>Material Suggestions</li>
+                <li>Style Guidance</li>
+                <li>Project Planning</li>
+            </ul>
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Book Appointment
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OUR PROCESS
+     ===================================================== -->
+
+<section class="services-process">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            OUR PROCESS
+        </p>
+
+        <h2>
+            How Our Service Works
+        </h2>
+
+        <p>
+            A simple process to help you move from
+            your initial idea to your finished space.
+        </p>
+
+    </div>
+
+
+    <div class="process-grid">
+
+        <div class="process-card">
+
+            <div class="process-icon">
+                01
+            </div>
+
+            <h3>
+                Tell Us Your Requirements
+            </h3>
+
+            <p>
+                Share your design ideas, requirements,
+                preferences and budget.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-icon">
+                02
+            </div>
+
+            <h3>
+                Meet Your Designer
+            </h3>
+
+            <p>
+                Connect with a suitable interior
+                designer through our platform.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-icon">
+                03
+            </div>
+
+            <h3>
+                Receive Your Quotation
+            </h3>
+
+            <p>
+                Review the proposed design,
+                requirements and project quotation.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-icon">
+                04
+            </div>
+
+            <h3>
+                Track Your Project
+            </h3>
+
+            <p>
+                Monitor project progress from
+                planning through completion.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+     ===================================================== -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <p class="section-tag">
+            START YOUR PROJECT
+        </p>
+
+        <h2>
+            Let's Build Something
+            Beautiful Together
+        </h2>
+
+        <p>
+            Get professional interior design
+            assistance for your next project.
+        </p>
+
+        <div class="cta-buttons">
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Book Consultation
+            </a>
+
+            <a href="{{ url_for('designer') }}"
+               class="btn-outline">
+                Find a Designer
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

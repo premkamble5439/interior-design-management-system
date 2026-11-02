@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login | Interior Design{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="container">
+
+        <div class="auth-card">
+
+            <div class="auth-header">
+                <span class="section-tag">ADMIN PORTAL</span>
+
+                <h1>Admin Login</h1>
+
+                <p>
+                    Sign in to manage the Interior Design Management System.
+                </p>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-message">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter admin email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary auth-button">
+                    Login as Admin
+                </button>
+
+            </form>
+
+            <div class="auth-footer">
+                <a href="{{ url_for('index') }}" class="btn-outline">
+                    ← Back to Website
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

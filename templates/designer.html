@@ -1,0 +1,541 @@
+{% extends "base.html" %}
+
+{% block title %}
+Designers | Interior Design System
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     DESIGNER HERO
+     ===================================================== -->
+
+<section class="designer-hero">
+
+    <div class="designer-hero-content">
+
+        <p class="section-tag">
+            OUR DESIGNERS
+        </p>
+
+        <h1>
+            Meet Our
+            <span>Creative Designers</span>
+        </h1>
+
+        <p>
+            Discover talented interior designers and
+            find the right professional for your
+            residential or commercial project.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DESIGNER INTRO
+     ===================================================== -->
+
+<section class="designer-intro">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            FIND YOUR DESIGNER
+        </p>
+
+        <h2>
+            Professionals Who Turn
+            Ideas Into Beautiful Spaces
+        </h2>
+
+        <p>
+            Explore our designers, their areas of
+            specialization and their experience.
+            Choose a designer who matches your
+            project requirements.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DESIGNER LIST
+     ===================================================== -->
+
+<section class="designer-section">
+
+    <div class="designer-grid">
+
+        {% if designers %}
+        {% for designer in designers %}
+        <div class="designer-card" id="designer-{{ designer.id }}">
+            <div class="designer-image">
+                <img
+                    src="{{ url_for('static', filename=designer.profile_image or 'images/interior-about.jpg') }}"
+                    alt="{{ designer.full_name }}">
+                <span class="designer-status">Available</span>
+            </div>
+
+            <div class="designer-content">
+                <h3>{{ designer.full_name }}</h3>
+                <p class="designer-role">Interior Designer</p>
+                <p class="designer-specialization">
+                    {{ designer.specialization or 'Interior Design' }}
+                </p>
+
+                <div class="designer-details">
+                    <span>{{ designer.experience_years or 0 }}+ Years</span>
+                </div>
+
+                <p class="designer-description">
+                    {{ designer.bio or 'Contact our team to learn more about this designer.' }}
+                </p>
+
+                <div class="designer-buttons">
+                    <a href="{{ url_for('consultation') }}"
+                       class="btn-primary">
+                        Book Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <!-- DESIGNER 1 -->
+
+        <div class="designer-card">
+
+            <div class="designer-image">
+
+                <img
+                    src="{{ url_for('static',
+                            filename='images/designer-1.jpg') }}"
+                    alt="Interior Designer">
+
+                <span class="designer-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="designer-content">
+
+                <h3>
+                    Aarav Sharma
+                </h3>
+
+                <p class="designer-role">
+                    Senior Interior Designer
+                </p>
+
+                <p class="designer-specialization">
+                    Residential & Luxury Interiors
+                </p>
+
+
+                <div class="designer-details">
+
+                    <span>
+                        ★ 4.9
+                    </span>
+
+                    <span>
+                        8+ Years
+                    </span>
+
+                </div>
+
+
+                <p class="designer-description">
+                    Specializes in modern residential
+                    interiors, luxury spaces and
+                    personalized home designs.
+                </p>
+
+
+                <div class="designer-buttons">
+
+                    <a href="{{ url_for('consultation') }}"
+                       class="btn-primary">
+                        Book Consultation
+                    </a>
+
+                    <a href="#"
+                       class="btn-outline">
+                        View Profile
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESIGNER 2 -->
+
+        <div class="designer-card">
+
+            <div class="designer-image">
+
+                <img
+                    src="{{ url_for('static',
+                            filename='images/designer-2.jpg') }}"
+                    alt="Interior Designer">
+
+                <span class="designer-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="designer-content">
+
+                <h3>
+                    Ananya Mehta
+                </h3>
+
+                <p class="designer-role">
+                    Interior Design Consultant
+                </p>
+
+                <p class="designer-specialization">
+                    Minimal & Contemporary Design
+                </p>
+
+
+                <div class="designer-details">
+
+                    <span>
+                        ★ 4.8
+                    </span>
+
+                    <span>
+                        6+ Years
+                    </span>
+
+                </div>
+
+
+                <p class="designer-description">
+                    Focuses on clean layouts,
+                    contemporary interiors and
+                    functional spaces.
+                </p>
+
+
+                <div class="designer-buttons">
+
+                    <a href="{{ url_for('consultation') }}"
+                       class="btn-primary">
+                        Book Consultation
+                    </a>
+
+                    <a href="#"
+                       class="btn-outline">
+                        View Profile
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESIGNER 3 -->
+
+        <div class="designer-card">
+
+            <div class="designer-image">
+
+                <img
+                    src="{{ url_for('static',
+                            filename='images/designer-3.jpg') }}"
+                    alt="Interior Designer">
+
+                <span class="designer-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="designer-content">
+
+                <h3>
+                    Riya Kapoor
+                </h3>
+
+                <p class="designer-role">
+                    Commercial Interior Designer
+                </p>
+
+                <p class="designer-specialization">
+                    Offices & Commercial Spaces
+                </p>
+
+
+                <div class="designer-details">
+
+                    <span>
+                        ★ 4.9
+                    </span>
+
+                    <span>
+                        7+ Years
+                    </span>
+
+                </div>
+
+
+                <p class="designer-description">
+                    Creates professional office,
+                    retail and commercial spaces
+                    with a strong focus on functionality.
+                </p>
+
+
+                <div class="designer-buttons">
+
+                    <a href="{{ url_for('consultation') }}"
+                       class="btn-primary">
+                        Book Consultation
+                    </a>
+
+                    <a href="#"
+                       class="btn-outline">
+                        View Profile
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESIGNER 4 -->
+
+        <div class="designer-card">
+
+            <div class="designer-image">
+
+                <img
+                    src="{{ url_for('static',
+                            filename='images/designer-4.jpg') }}"
+                    alt="Interior Designer">
+
+                <span class="designer-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="designer-content">
+
+                <h3>
+                    Vihaan Patel
+                </h3>
+
+                <p class="designer-role">
+                    Interior Architect
+                </p>
+
+                <p class="designer-specialization">
+                    Modern Architecture & Interiors
+                </p>
+
+
+                <div class="designer-details">
+
+                    <span>
+                        ★ 4.7
+                    </span>
+
+                    <span>
+                        5+ Years
+                    </span>
+
+                </div>
+
+
+                <p class="designer-description">
+                    Combines architectural planning
+                    with modern interior design to
+                    create practical and elegant spaces.
+                </p>
+
+
+                <div class="designer-buttons">
+
+                    <a href="{{ url_for('consultation') }}"
+                       class="btn-primary">
+                        Book Consultation
+                    </a>
+
+                    <a href="#"
+                       class="btn-outline">
+                        View Profile
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WHY CHOOSE OUR DESIGNERS
+     ===================================================== -->
+
+<section class="designer-benefits">
+
+    <div class="section-heading">
+
+        <p class="section-tag">
+            WHY CHOOSE US
+        </p>
+
+        <h2>
+            Design Expertise You Can Trust
+        </h2>
+
+    </div>
+
+
+    <div class="benefits-grid">
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                ✓
+            </div>
+
+            <h3>
+                Verified Professionals
+            </h3>
+
+            <p>
+                Work with experienced designers
+                available through our platform.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                ★
+            </div>
+
+            <h3>
+                Quality Designs
+            </h3>
+
+            <p>
+                Get design solutions tailored to
+                your requirements and preferences.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                ₹
+            </div>
+
+            <h3>
+                Transparent Quotations
+            </h3>
+
+            <p>
+                Receive project quotations before
+                proceeding with your interior project.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                🤝
+            </div>
+
+            <h3>
+                Easy Collaboration
+            </h3>
+
+            <p>
+                Communicate and coordinate with
+                your designer through one platform.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+     ===================================================== -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <p class="section-tag">
+            START YOUR PROJECT
+        </p>
+
+        <h2>
+            Ready To Design Your
+            Dream Space?
+        </h2>
+
+        <p>
+            Choose a designer and start your
+            interior design journey today.
+        </p>
+
+        <div class="cta-buttons">
+
+            <a href="{{ url_for('consultation') }}"
+               class="btn-primary">
+                Book Consultation
+            </a>
+
+            <a href="{{ url_for('services') }}"
+               class="btn-outline">
+                Explore Services
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

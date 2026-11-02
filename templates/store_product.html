@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | Interior Design Store{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/store.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="store-page">
+    <section class="product-detail-section">
+        <a href="{{ url_for('store', category=product.category) }}"
+           class="product-back-link">← Back to {{ product.category or 'Store' }}</a>
+
+        <article class="product-detail-card">
+            <div class="product-detail-image">
+                {% if product.image %}
+                <img src="{{ url_for('static', filename='images/' + product.image) }}"
+                     alt="{{ product.name }}">
+                {% else %}
+                <span class="product-image-placeholder">Interior Design</span>
+                {% endif %}
+            </div>
+
+            <div class="product-detail-info">
+                <span class="product-category">{{ product.category or 'Interior' }}</span>
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.description or 'Thoughtfully selected for your home.' }}</p>
+                <div class="price">₹{{ "%.2f"|format(product.price or 0) }}</div>
+
+                {% if product.stock_quantity|int > 0 %}
+                <p class="stock-availability">
+                    In stock — {{ product.stock_quantity }} available
+                </p>
+                <form action="{{ url_for('add_to_cart', product_id=product.id) }}"
+                      method="POST"
+                      class="product-detail-cart-form">
+                    <label for="product-quantity">Quantity</label>
+                    <input id="product-quantity"
+                           type="number"
+                           name="quantity"
+                           value="1"
+                           min="1"
+                           max="{{ product.stock_quantity }}"
+                           required>
+                    <input type="hidden" name="next"
+                           value="{{ url_for('store_product', product_id=product.id) }}">
+                    <button type="submit" class="add-cart">Add to Cart</button>
+                </form>
+                {% else %}
+                <p class="stock-availability out-of-stock-text">Currently out of stock</p>
+                <button type="button" class="add-cart" disabled>Out of Stock</button>
+                {% endif %}
+            </div>
+        </article>
+    </section>
+</div>
+{% endblock %}

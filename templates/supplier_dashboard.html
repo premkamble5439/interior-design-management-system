@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block title %}Supplier Dashboard | Interior Design{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/supplier_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-section supplier-dashboard-page">
+
+    <div class="container">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <span class="section-tag">
+                    SUPPLIER PORTAL
+                </span>
+
+                <h1>Supplier Dashboard</h1>
+
+                <p>
+                    Welcome{% if supplier and supplier.company_name %}, {{ supplier.company_name }}{% elif user and user.name %}, {{ user.name }}{% endif %}. Review your products, customer sales and restock requests.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('logout') }}"
+               class="btn-outline">
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">01</span>
+
+                <h3>Products</h3>
+
+                <strong>
+                    {{ products|length }}
+                </strong>
+
+                <p>Available products</p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">02</span>
+
+                <h3>Orders</h3>
+
+                <strong>
+                    {{ supplier_orders|length }}
+                </strong>
+
+                <p>Restock requests</p>
+
+            </div>
+
+        </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-tag">RESTOCK REQUESTS</span>
+                    <h2>Orders from Interior Design</h2>
+                    <p>These requests are generated when a linked product reaches zero stock.</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Request</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Customer Order</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for supplier_order in supplier_orders %}
+                        <tr>
+                            <td>#{{ supplier_order.id }}</td>
+                            <td>{{ supplier_order.product_name }}</td>
+                            <td>{{ supplier_order.product_category or '—' }}</td>
+                            <td>{{ supplier_order.quantity }}</td>
+                            <td>{{ supplier_order.customer_order_id or '—' }}</td>
+                            <td><span class="status-badge">{{ supplier_order.status|title }}</span></td>
+                            <td>{{ supplier_order.created_at }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="7">No restock requests yet.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span class="section-tag">
+                        INVENTORY
+                    </span>
+
+                    <h2>Products</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for product in products %}
+
+                        <tr>
+
+                            <td>{{ product.id }}</td>
+
+                            <td>{{ product.name }}</td>
+
+                            <td>{{ product.category }}</td>
+
+                            <td>₹{{ product.price }}</td>
+
+                            <td>{{ product.stock_quantity }}</td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="5">
+                                No products available.
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span class="section-tag">
+                        ORDERS
+                    </span>
+
+                    <h2>Customer Orders</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for order in orders %}
+
+                        <tr>
+
+                            <td>{{ order.id }}</td>
+
+                            <td>{{ order.customer_id }}</td>
+
+                            <td>
+                                ₹{{ order.total_amount }}
+                            </td>
+
+                            <td>
+                                <span class="status-badge">
+                                    {{ order.status }}
+                                </span>
+                            </td>
+
+                            <td>{{ order.created_at }}</td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="5">
+                                No orders available.
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

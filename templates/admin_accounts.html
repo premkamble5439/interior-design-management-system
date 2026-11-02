@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Accounts | Admin{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_accounts.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section admin-dashboard-page admin-accounts-page">
+    <div class="container">
+        <div class="dashboard-header">
+            <div>
+                <span class="section-tag">ACCOUNT MANAGEMENT</span>
+                <h1>Manage Accounts</h1>
+                <p>Manage customer, supplier, contractor, and designer accounts.</p>
+            </div>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn-outline">Back to dashboard</a>
+        </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-heading account-list-heading">
+                <div>
+                    <span class="section-tag">ALL PROFILES</span>
+                    <h2>{{ accounts|length }} accounts</h2>
+                    <p>Deleting an account also deletes records linked through database cascades.</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="dashboard-table account-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Role</th>
+                            <th>Organization / Specialization</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for account in accounts %}
+                        <tr>
+                            <td>
+                                <strong>{{ account.name }}</strong>
+                                <small>#{{ account.id }}</small>
+                            </td>
+                            <td>
+                                <span>{{ account.email }}</span>
+                                <small>{{ account.phone or 'No phone provided' }}</small>
+                            </td>
+                            <td>
+                                <span class="status-badge">{{ account.role|title }}</span>
+                            </td>
+                            <td>
+                                {% if account.role in ['supplier', 'contractor'] %}
+                                    <strong>{{ account.company_name or 'Company not set' }}</strong>
+                                    {% if account.specialization %}<small>{{ account.specialization }}</small>{% endif %}
+                                {% elif account.role == 'designer' %}
+                                    {{ account.specialization or 'No specialization' }}
+                                {% else %}
+                                    {{ account.city or 'Customer' }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="account-status {{ account.status }}">{{ account.status|title }}</span>
+                            </td>
+                            <td>
+                                <div class="account-actions">
+                                    <a class="account-action edit"
+                                       href="{{ url_for('admin_edit_account', user_id=account.id) }}">Edit</a>
+                                    <form method="POST"
+                                          action="{{ url_for('admin_toggle_account_status', user_id=account.id) }}">
+                                        <button class="account-action status"
+                                                type="submit">
+                                            {% if account.status == 'active' %}Deactivate{% else %}Activate{% endif %}
+                                        </button>
+                                    </form>
+                                    <form method="POST"
+                                          action="{{ url_for('admin_delete_account', user_id=account.id) }}"
+                                          onsubmit="return confirm('Delete this {{ account.role }} account and all records linked to it? This cannot be undone.');">
+                                        <button class="account-action delete"
+                                                type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="empty-accounts">No customer or professional accounts found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

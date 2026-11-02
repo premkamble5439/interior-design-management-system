@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+
+{% block title %}Designer Dashboard | Interior Design{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-section admin-dashboard-page designer-dashboard-page">
+
+    <div class="container">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <span class="section-tag">
+                    DESIGNER PORTAL
+                </span>
+
+                <h1>Designer Dashboard</h1>
+
+                <p>
+                    Manage consultations, projects and quotations.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('logout') }}"
+               class="btn-outline">
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">01</span>
+
+                <h3>Consultations</h3>
+
+                <strong>
+                    {{ consultations|length }}
+                </strong>
+
+                <p>Assigned consultations</p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">02</span>
+
+                <h3>Projects</h3>
+
+                <strong>
+                    {{ projects|length }}
+                </strong>
+
+                <p>Assigned projects</p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">03</span>
+
+                <h3>Quotations</h3>
+
+                <strong>
+                    {{ quotations|length }}
+                </strong>
+
+                <p>Project quotations</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span class="section-tag">
+                        CONSULTATIONS
+                    </span>
+
+                    <h2>My Consultations</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for item in consultations %}
+
+                        <tr>
+
+                            <td>{{ item.id }}</td>
+
+                            <td>
+                                {{ item.customer_name or item.customer_id }}
+                            </td>
+
+                            <td>
+                                {{ item.preferred_date }}
+                            </td>
+
+                            <td>
+                                <span class="status-badge">
+                                    {{ item.status }}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="4">
+                                No consultations assigned.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span class="section-tag">
+                        PROJECTS
+                    </span>
+
+                    <h2>My Projects</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Project</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for project in projects %}
+
+                        <tr>
+
+                            <td>{{ project.id }}</td>
+
+                            <td>{{ project.name }}</td>
+
+                            <td>{{ project.customer_id }}</td>
+
+                            <td>
+                                <span class="status-badge">
+                                    {{ project.status }}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="4">
+                                No projects assigned.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span class="section-tag">
+                        QUOTATIONS
+                    </span>
+
+                    <h2>My Quotations</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for quotation in quotations %}
+
+                        <tr>
+
+                            <td>{{ quotation.id }}</td>
+
+                            <td>
+                                {{ quotation.customer_id }}
+                            </td>
+
+                            <td>
+                                {{ quotation.total_amount }}
+                            </td>
+
+                            <td>
+                                <span class="status-badge">
+                                    {{ quotation.status }}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="4">
+                                No quotations available.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

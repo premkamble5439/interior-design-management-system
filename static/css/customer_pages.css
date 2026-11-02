@@ -1,0 +1,1149 @@
+/* =========================================================
+   CUSTOMER PAGES
+   Consultation / Quotation / Project Tracking
+   Interior Design System
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.customer-page {
+    max-width: 1250px;
+    margin: 0 auto;
+
+    padding: 35px 25px 60px;
+
+    color: #292929;
+}
+
+
+/* =========================================================
+   PAGE HERO
+   ========================================================= */
+
+.page-hero {
+    position: relative;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding: 42px;
+
+    margin-bottom: 30px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #242424,
+            #474747
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.page-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    right: -100px;
+    top: -130px;
+
+    border: 45px solid rgba(255,255,255,0.05);
+
+    border-radius: 50%;
+}
+
+.page-label {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #cfcfcf;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.page-hero h1 {
+    margin: 0 0 10px;
+
+    font-size: 36px;
+
+    font-weight: 700;
+}
+
+.page-hero p {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #dddddd;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.hero-icon {
+    position: relative;
+
+    z-index: 2;
+
+    width: 80px;
+    height: 80px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.10);
+
+    font-size: 36px;
+}
+
+
+/* =========================================================
+   CONSULTATION
+   ========================================================= */
+
+.consultation-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(300px, 0.9fr)
+        minmax(450px, 1.1fr);
+
+    gap: 28px;
+}
+
+.info-panel,
+.form-card {
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 6px 25px rgba(0,0,0,0.05);
+}
+
+.info-panel {
+    padding: 35px;
+}
+
+.small-heading {
+    color: #888888;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.info-panel h2 {
+    margin: 10px 0 15px;
+
+    font-size: 27px;
+
+    line-height: 1.25;
+}
+
+.info-panel > p {
+    color: #777777;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+
+.benefit-list {
+    margin-top: 30px;
+}
+
+.benefit-item {
+    display: flex;
+
+    gap: 15px;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.benefit-item:last-child {
+    border-bottom: none;
+}
+
+.benefit-icon {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eeeeee;
+
+    color: #333333;
+
+    font-weight: 700;
+}
+
+.benefit-item h3 {
+    margin: 0 0 4px;
+
+    font-size: 14px;
+}
+
+.benefit-item p {
+    margin: 0;
+
+    color: #888888;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-card {
+    padding: 35px;
+}
+
+.form-header {
+    margin-bottom: 25px;
+}
+
+.form-header h2 {
+    margin: 0 0 6px;
+
+    font-size: 22px;
+}
+
+.form-header p {
+    margin: 0;
+
+    color: #888888;
+
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #444444;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #555555;
+
+    box-shadow:
+        0 0 0 3px rgba(0,0,0,0.05);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-btn,
+.outline-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.primary-btn {
+    border: 1px solid #292929;
+
+    background: #292929;
+
+    color: #ffffff;
+}
+
+.primary-btn:hover {
+    background: #4a4a4a;
+
+    border-color: #4a4a4a;
+
+    transform: translateY(-1px);
+}
+
+.outline-btn {
+    border: 1px solid #cccccc;
+
+    background: #ffffff;
+
+    color: #333333;
+}
+
+.outline-btn:hover {
+    background: #f4f4f4;
+}
+
+.small-btn {
+    padding: 9px 14px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   QUOTATION GRID
+   ========================================================= */
+
+.quotation-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.quotation-card {
+    padding: 27px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 6px 25px rgba(0,0,0,0.05);
+}
+
+.quotation-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.quotation-label {
+    color: #999999;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.quotation-top h2 {
+    margin: 5px 0 0;
+
+    font-size: 20px;
+}
+
+.quotation-project {
+    padding: 18px 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.quotation-project span,
+.amount-list span,
+.quotation-footer span {
+    color: #999999;
+
+    font-size: 11px;
+}
+
+.quotation-project strong {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    padding: 7px 11px;
+
+    border-radius: 30px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    white-space: nowrap;
+}
+
+.status-approved {
+    background: #e4f5ea;
+
+    color: #287044;
+}
+
+.status-sent {
+    background: #e5efff;
+
+    color: #285d9b;
+}
+
+.status-rejected {
+    background: #fbe5e5;
+
+    color: #a33d3d;
+}
+
+.status-expired {
+    background: #eeeeee;
+
+    color: #666666;
+}
+
+.status-draft {
+    background: #fff3d7;
+
+    color: #886600;
+}
+
+
+/* =========================================================
+   AMOUNT
+   ========================================================= */
+
+.amount-list {
+    border-top: 1px solid #eeeeee;
+}
+
+.amount-list > div {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.amount-list strong {
+    font-size: 13px;
+}
+
+.total-row {
+    margin-top: 5px;
+
+    padding-top: 17px !important;
+
+    border-bottom: none !important;
+}
+
+.total-row span {
+    color: #333333 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700;
+}
+
+.total-row strong {
+    font-size: 18px;
+
+    color: #222222;
+}
+
+
+/* =========================================================
+   QUOTATION DESCRIPTION
+   ========================================================= */
+
+.quotation-description {
+    padding: 18px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.quotation-description h3 {
+    margin: 0 0 7px;
+
+    font-size: 13px;
+}
+
+.quotation-description p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   QUOTATION FOOTER
+   ========================================================= */
+
+.quotation-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-top: 18px;
+}
+
+.quotation-footer > div:first-child {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.quotation-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   PROJECT TRACKING
+   ========================================================= */
+
+.tracking-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.tracking-card {
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 6px 25px rgba(0,0,0,0.05);
+}
+
+.tracking-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding-bottom: 23px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.project-id {
+    color: #999999;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.tracking-header h2 {
+    margin: 5px 0;
+
+    font-size: 24px;
+}
+
+.tracking-header p {
+    margin: 0;
+
+    color: #888888;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PROJECT DETAILS
+   ========================================================= */
+
+.project-details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    padding: 23px 0;
+}
+
+.project-details-grid > div {
+    padding: 16px;
+
+    background: #fafafa;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 10px;
+}
+
+.project-details-grid span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #999999;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    font-weight: 700;
+}
+
+.project-details-grid strong {
+    font-size: 13px;
+
+    color: #444444;
+}
+
+
+/* =========================================================
+   PROJECT DESCRIPTION
+   ========================================================= */
+
+.project-description {
+    padding: 18px 0;
+
+    border-top: 1px solid #eeeeee;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.project-description h3 {
+    margin: 0 0 8px;
+
+    font-size: 14px;
+}
+
+.project-description p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.progress-area {
+    padding: 25px 0;
+}
+
+.progress-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    font-size: 13px;
+}
+
+.progress-heading span {
+    font-weight: 700;
+}
+
+.progress-bar {
+    width: 100%;
+
+    height: 9px;
+
+    overflow: hidden;
+
+    background: #eeeeee;
+
+    border-radius: 20px;
+}
+
+.progress-fill {
+    height: 100%;
+
+    background: #333333;
+
+    border-radius: 20px;
+
+    transition: width 0.5s ease;
+}
+
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.project-timeline {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    margin: 10px 0 25px;
+}
+
+.timeline-item {
+    position: relative;
+
+    padding-right: 20px;
+}
+
+.timeline-item::after {
+    content: "";
+
+    position: absolute;
+
+    top: 7px;
+
+    left: 15px;
+
+    width: calc(100% - 15px);
+
+    height: 2px;
+
+    background: #eeeeee;
+}
+
+.timeline-item:last-child::after {
+    display: none;
+}
+
+.timeline-dot {
+    position: relative;
+
+    z-index: 2;
+
+    width: 15px;
+    height: 15px;
+
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+
+    background: #dddddd;
+
+    border: 3px solid #ffffff;
+
+    box-shadow:
+        0 0 0 1px #dddddd;
+}
+
+.timeline-item.active .timeline-dot {
+    background: #333333;
+
+    box-shadow:
+        0 0 0 1px #333333;
+}
+
+.timeline-item.active::after {
+    background: #555555;
+}
+
+.timeline-item strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+}
+
+.timeline-item p {
+    margin: 0;
+
+    color: #999999;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   UPDATES
+   ========================================================= */
+
+.updates-area {
+    padding-top: 25px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.updates-area h3 {
+    margin: 0 0 15px;
+
+    font-size: 16px;
+}
+
+.update-item {
+    display: flex;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    background: #fafafa;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 10px;
+}
+
+.update-progress {
+    width: 45px;
+    height: 45px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #333333;
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.update-item h4 {
+    margin: 0 0 4px;
+
+    font-size: 13px;
+}
+
+.update-item p {
+    margin: 0 0 5px;
+
+    color: #777777;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.update-item small {
+    color: #aaaaaa;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-page {
+    padding: 70px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px dashed #dddddd;
+
+    border-radius: 17px;
+}
+
+.empty-icon {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background: #f1f1f1;
+
+    font-size: 28px;
+}
+
+.empty-page h2 {
+    margin: 0 0 10px;
+
+    font-size: 21px;
+}
+
+.empty-page p {
+    max-width: 500px;
+
+    margin: 0 auto 22px;
+
+    color: #888888;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .consultation-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .quotation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-details-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .customer-page {
+        padding: 20px 14px 40px;
+    }
+
+    .page-hero {
+        padding: 28px 23px;
+    }
+
+    .page-hero h1 {
+        font-size: 27px;
+    }
+
+    .hero-icon {
+        display: none;
+    }
+
+    .info-panel,
+    .form-card,
+    .tracking-card,
+    .quotation-card {
+        padding: 22px;
+    }
+
+    .project-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-timeline {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .timeline-item {
+        padding-left: 25px;
+    }
+
+    .timeline-item::after {
+        left: 6px;
+
+        top: 15px;
+
+        width: 2px;
+
+        height: calc(100% + 20px);
+    }
+
+    .timeline-dot {
+        position: absolute;
+
+        left: 0;
+
+        top: 0;
+    }
+
+    .quotation-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .quotation-actions {
+        width: 100%;
+    }
+
+    .quotation-actions form {
+        flex: 1;
+    }
+
+    .quotation-actions button {
+        width: 100%;
+    }
+
+    .tracking-header {
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .page-hero {
+        margin-bottom: 20px;
+    }
+
+    .page-hero h1 {
+        font-size: 24px;
+    }
+
+    .page-hero p {
+        font-size: 13px;
+    }
+
+    .quotation-top {
+        flex-direction: column;
+    }
+
+    .benefit-item {
+        gap: 10px;
+    }
+
+}
